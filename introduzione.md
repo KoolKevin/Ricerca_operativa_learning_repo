@@ -60,3 +60,10 @@ Negli anni '40, quando la programmazione lineare è stata sviluppata (soprattutt
     - di nuovo vincoli e funzione obiettivo sono lineari, però le variabili sono intere
     - non sembra una differenza drammatica rispetto alla programmazione lineare normale ma in realtà lo è (problema dell'assegnazione). MOLTO PIù DIFFICILE
 
+4) problemi di scheduling 
+    - ILP -> integer linear programming
+
+5) problemi su grafi | circuito ottimo
+    - vogliamo visitare tanti nodi col viaggio più breve possibile
+    - migliaia di problemi di ottimizzazione possono essere modellati tramite grafi
+        - grafi come strumento di modellazione
