@@ -1,36 +1,46 @@
-la ricerca operativa ha varie definizioni
-
-a noi ci interessa risolvere problemi di decisione al fine di ottenere il migliore risultato possibile (problemi di ottimizzazione)
+# Ricerca operativa
+application of scientific methods to “decision making problems” which are encountered in any organization in which it is required to manage and coordinate activities and resources so as to obtain the best possible result
+- a noi ci interessa risolvere **problemi di decisione** al fine di ottenere il migliore risultato possibile (**ottimizzazione**)
+- ricerca operativa nome infelice, meglio **teoria delle decisioni**
 
 ma se il sistema è influenzato dal dalle persone, è possibile prevedere il loro comportamento?
+- si
 - es. di teoria dei giochi
 
-ci siamo convinti che i problemi decisionali possono essere trattai scientificamente
+
+### metodo scientifico
+ci siamo convinti che i problemi decisionali possono essere trattati scientificamente
 - metodo scientifico
 - modelli (regole?) e sistemi
 
-
-**metodo induttivo vs meduto deduttivo**
-- tacchino induttivo
-- cambia la prospettiva, non abbiamo più leggi assolute, piuttosto abbiamo dei modelli che possono essere stressati tramite delle deduzioni di preduzioni. Se il risultato vero non coincide con quello del modello, allora il modello è sbagliato
-
-
-sistema: entità composta da tante parti che interagiscono tra di loro
-- modelli descrivono sistemi
-
-modelli matematici analitici difficilmente applicabili per problemi decisionali
-- non ci sono soluzioni in formula chiusa
-
-**modelli numerici**: programmazione lineare, grafi e simulazioni
-
-modelli statici vs dinamici: sistemi senza/con dipendenza del tempo
+Science:
+- organization of knowledge in a form that allows one to predict the effect of actions.
+- Objective: discover rules (**models**) that describe the behavior of a **system**
 
 
-### Origine storica della ricerca operativa
-ricerca operativa nome infelice, meglio teoria delle decisioni
+**metodo induttivo vs metodo deduttivo**
+- metodo induttivo: use observations to find general laws and theories    
+    - critica: tacchino induttivo
+- metodo deduttivo: study the system -> devolop a model -> deduce a prediction -> correct? -> if not itera
+    - cambia la prospettiva, non abbiamo più leggi assolute, piuttosto abbiamo dei modelli che possono essere stressati tramite predizioni dedotte dallo studio del sistema.
+    - se il risultato vero non coincide con quello del modello, allora il modello è sbagliato
 
-...
 
+**sistema**: entità composta da tante parti che interagiscono tra di loro
+- come possiamo predirre il comportamento di un sistema?
+
+**modelli**: semplificazione della realtà inventata per lo studio di un sistema (schemi che descrivono sistemi)
+- modelli fisici
+- modelli matematici: descrizione sotto forma di formule matematiche/logiche
+    - modelli matematici analitici: sistemi di equazioni con una soluzione espressa da una formula
+        - difficilmente applicabili per problemi decisionali
+    - **modelli matematici numerici**: modelli di programmazione lineare, simulazione (e grafi)
+        - quelli di interesse per il corso
+        - la soluzione si esprime tramite algoritmi e computer che li computano
+
+i modelli si classificano ulteriormente in
+- modelli statici:    sistemi senza dipendenza dal tempo (programmazione lineare, grafi)
+- modelli dinamici:   sistemi con dipendenza del tempo (simulazione)
 
 
 
@@ -47,8 +57,7 @@ ricerca operativa nome infelice, meglio teoria delle decisioni
     - algoritmo del simplesso
         - il più importante algoritmo nell'area dell'ottimizzazione (computazionalmente efficiente)
 
-Perché "programmazione"?
-Il termine "programmazione" in questo contesto deriva dal significato originale della parola, che si riferisce alla **pianificazione** strategica piuttosto che alla scrittura di programmi informatici.
+Perché "programmazione"? Il termine "programmazione" in questo contesto deriva dal significato originale della parola, che si riferisce alla **pianificazione** strategica piuttosto che alla scrittura di programmi informatici.
 
 Negli anni '40, quando la programmazione lineare è stata sviluppata (soprattutto grazie a George Dantzig con il metodo del simplesso), il termine "programmare" significava pianificare in modo ottimale l'uso delle risorse disponibili per raggiungere un obiettivo. Questo era particolarmente utile in ambito militare ed economico, dove si cercava di ottimizzare la distribuzione delle risorse.
 
@@ -58,7 +67,7 @@ Negli anni '40, quando la programmazione lineare è stata sviluppata (soprattutt
     - problemi con una struttura combinatoria non si risolvono tramite enumerazione(detta anche brute-force)
     - ogni riga/colonna ha tutti zeri ed un uno (ogni compito può essere assegnato ad un solo impiegato e viceversa) 
     - di nuovo vincoli e funzione obiettivo sono lineari, però le variabili sono intere
-    - non sembra una differenza drammatica rispetto alla programmazione lineare normale ma in realtà lo è (problema dell'assegnazione). MOLTO PIù DIFFICILE
+    - non sembra una differenza drammatica rispetto alla programmazione lineare normale ma in realtà lo è -> **MOLTO PIù DIFFICILE**
 
 4) problemi di scheduling 
     - ILP -> integer linear programming
