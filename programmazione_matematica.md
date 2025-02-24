@@ -87,8 +87,35 @@ una funzione c da un insieme convesso ai reali, è convessa se c( combinazione c
 
 - notare il <=, **le funzioni lineari sono sempre sia concave che convesse**
 
+
+se definita una soglia, la regione dello spazio ammissibile rimane un insieme convesso ...
+
+
+
+
 ### Definizione di programmazione convessa
 Consideriamo il problema di minimizzare una funzione convessa su un insieme convesso:
 
-TEOREMA
+**TEOREMA**
 dato (F, c), con sia F che c convessi, ogni intorno è un intorno esatto (gli ottimi locali sono anche ottimi globali)
+- l'intorno eucliedeo è un intorno esatto per ogni epsilon
+
+in un problema di programmazione convessa, gli ottimi locali rispetto ad un intorno euclideo sono anche ottimi globali
+- questo vale anche per la programmazione lineare
+
+
+DIM:
+- supponiamo x ottimo locale di un intorno euclideo N, e prendiamo un punto y qualunque appartenente alla regione ammissibile;
+    - vogliamo fare vedere che x è un ottimo migliore di y
+- scegliamo un valore di lambda tale che la combinazione convessa (z) ricade dentro ad N
+- passaggi algebrici
+    - ricopio la definizione di funzione convessa
+    - isolo c(y)
+    - c(z) >= c(x)
+    - sostituzione fa ottenere c(y) >= c(x) per ogni y
+
+confronto con la slide precedente dei problemi di programmazione convessa
+- posso sostituire le equazioni con due disequazioni
+- le disequazioni sono tutte concave è una condizione
+
+in un problema di programmazione convessa la regione ammissibile è convessa
