@@ -100,7 +100,36 @@ combinazione convessa di p punti:
 
 **PROP 2**:
 
+Property The constraints of an LP define a polytope.
 
 
 
-Politopi e programmazione lineare:
+
+### Politopi e programmazione lineare:
+
+congiungiamo le due strade (algebriche e geometriche)
+
+Theorem Given the polytope P defined by the constraints of an LP, a necessary and sufficient condition for a point to be a vertex is that the corresponding vector x be a BFS.
+
+- le soluzioni base ammissibili sono vertici del politopo e i vertici del politopo sono soluzioni base ammissibili
+
+ricorda che, intuitivamente, la soluzione ottima si trova guardando i vertici 
+
+
+per ogni politopo esiste un vertice ottimo
+- non abbiamo dimostrato che il punto è un vertice, però il suo valore è ottimo
+    - funzione obiettivo parallela ad uno spigolo
+    - da qui deriva il corollario
+
+**Abbiamo ottenuto un algoritmo per risolvere tutti i problemi di programmazione lineare!**
+- esaminiamo tutti i vertici del politopo
+- binomio di newton (m su n) combinazioni di m colonne sulla matrice A (ognuna che calcola l'inversa di una matrice)
+
+
+**Considerazioni sulle basi**:
+- basi degeneri
+- basi e BFS distini, BFS distini e basi non necessariamente distinte
+
+Cio che frega è che ci possono essere più zeri di n-m
+
+un'algoritmo pensa di star cambiando vertice cambiando base, ma in realtà può rimanere nello stesso punto e star facendo fatica inutilmente
