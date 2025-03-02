@@ -224,7 +224,6 @@ Una base determina unicamente un BFS (il BFS si ottiene invertendo la base)
 - ma è vero il contrario? se  **B' != B'' => se BFS' != BFS''**? NO!
 
 **DEF**: A BFS is called degenerate if it contains more than n − m zeroes
-- Cio che frega è che ci possono essere più zeri di n-m in x
 
 **Theorem**: If two distinct bases B′ and B′′ correspond to the same BFS x, then x is degenerate
 
