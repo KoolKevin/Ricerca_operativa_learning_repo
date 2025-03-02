@@ -111,8 +111,8 @@ DIM:
 - passaggi algebrici
     - ricopio la definizione di funzione convessa
     - isolo c(y)
-    - c(z) >= c(x)
-    - sostituzione fa ottenere c(y) >= c(x) per ogni y
+    - z appartiene all'intorno e quindi -> c(z) >= c(x)
+    - sostituzione fa ottenere c(y) >= c(x) per ogni y -> **x ottimo locale è anche ottimo globale**
 
 confronto con la slide precedente dei problemi di programmazione convessa
 - posso sostituire le equazioni con due disequazioni
