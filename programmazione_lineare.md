@@ -198,7 +198,7 @@ Given the polytope P defined by the constraints of an LP, a necessary and suffic
 - questo conferma l'intuizione grafica iniziale la soluzione ottima va cercata esplorando i vertici del politopo 
 
 **TEOREMA**:
-per ogni LP esiste un vertice ottimo; ovvero un BFS ottimo
+per ogni LP esiste un vertice ottimo (ovvero un BFS ottimo)
 
 - non abbiamo dimostrato che il punto è un vertice, però il suo valore è ottimo
     - funzione obiettivo parallela ad uno spigolo
@@ -213,10 +213,19 @@ Dalla relazione e dal teorema **abbiamo ottenuto un algoritmo (naive) per risolv
 (con l'algoritmo del simplesso non considereremo solamente tutti i vertici del politopo, ma solo un piccolo sottoinsieme)
 
 
-**Considerazioni sulle basi**:
-- basi degeneri
-- basi e BFS distini, BFS distini e basi non necessariamente distinte
 
-Cio che frega è che ci possono essere più zeri di n-m
 
-un'algoritmo pensa di star cambiando vertice cambiando base, ma in realtà può rimanere nello stesso punto e star facendo fatica inutilmente
+
+
+
+### Basi degeneri:
+Una base determina unicamente un BFS (il BFS si ottiene invertendo la base)
+- di conseguenza: **se BFS' != BFS'' => B' != B''**
+- ma è vero il contrario? se  **B' != B'' => se BFS' != BFS''**? NO!
+
+**DEF**: A BFS is called degenerate if it contains more than n − m zeroes
+- Cio che frega è che ci possono essere più zeri di n-m in x
+
+**Theorem**: If two distinct bases B′ and B′′ correspond to the same BFS x, then x is degenerate
+
+intuizione: un'algoritmo pensa di star cambiando vertice quando cambia la base, ma in realtà può rimanere nello stesso punto e star facendo fatica inutilmente
