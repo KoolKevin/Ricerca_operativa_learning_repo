@@ -84,7 +84,80 @@ a quanto pare esce la colonna di base con indice pari alla riga del pivot (capis
 
 ### come si sceglie la colonna da fare entrare in base?
 bisogno non far peggiorare il valore della soluzione -> dobbiamo considerare la funzione di costo (fino ad ora lasciata da parte)
-
-... sono stancoooooo!
+- per adesso scegliamo uno a caso con costo negativo
 
 tutti zero in corrispondenza della base
+
+
+
+### Quanto possono essere preoccupanti le soluzioni degeneri?
+...
+
+**possono produrre cicli infiniti!**
+
+Se si incontrano basi degeneri non è detto che l'algoritmo arrivi alla soluzione ottimale!
+
+bisogna scegliere attentamente le colonne da fare entrare in base. Una mi può portare ad una soluzione degenere, l'altra no
+
+
+
+### Regole di pivoting
+due decisioni:
+
+```
+non esiste nessun metodo matematico che ci dice con certezza quale colonna far entrare per far convergere il prima possibile l'algoritmo!  
+```
+
+Tuttavia, nel caso medio, una buona idea è scegliere quella con il costo minore (Regola di Dantzig)
+- infatti è di gran lunga la scelta migliore
+- curiosità: si potrebbe pensare di scegliere la colonna che produce la diminuzione locale migliore possibile... però ad ogni passo devo guardare m elementi 
+- regola di bland: garantisce la convergenza dell'algoritmo
+
+l'algoritmo, normalmente userà la regola di Dantzig. Nei casi in cui ci si sta accorgendo di essere in un loop -> switch alla regola di Bland
+
+
+
+
+
+Rimane come capire una BFS di partenza con la matrice identità come base
+- difficile a causa delle assunzioni 1 e 2
+- forse non esiste una base
+- anche se esiste magari la regione ammissibile è vuota
+
+Dobbiamo accorgercene!
+
+### Metodo delle due fasi
+...
+
+Aggiungo al sistema m variabili artificiali, ogni riga del sistema passa da x1 + x2 = 3 -> x1 + x2 + xa = 3
+- chiaramente non è un operazione elementare di riga, le soluzioni del sistema cambiano
+
+**NB**: sistema "dopato" potrebbe anche andarmi bene se la base non fosse nelle variabili artificiali ma in quelle vere.
+- questo perchè le variabili fuori base, e quindi anche quelle artificiali, valgono zero
+- come faccio? operazioni di pivoting! 
+
+uso una funzione obiettivo artificiale con cui cerco soluzioni del mio sistema originale (variabili artificiali hanno somma zero)
+
+...
+
+
+può accadere che la soluzione ottima ha comunque funzione obiettivo maggiore di zero
+- Assunzione 2 violata
+
+può anche accadere che il costo sia zero ma che alcune variabili artificiali rimangano comunque in base (situazione degenere)
+- corrisponde alla violazione dell'assunzione 1
+
+... struttura tipica dei costi relativi (di quanto varia il costo se faccio entrare la variabili in base (varia quanto il coefficiente))
+
+**fase 2**
+le variabili artificiale sembrerebbe che possano essere scartate via (semplicistico)
+
+introduciamo solamente le variabili artificiali necessarie nella fase 2
+
+
+i termini noti devono essere positivi?? **controlla**
+
+...
+
+
+nel terzo esempio posso eseguire un pivotin anche se l'elemento è negativo dato che 
