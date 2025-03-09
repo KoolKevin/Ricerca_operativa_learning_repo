@@ -222,9 +222,10 @@ Dalla relazione e dal teorema **abbiamo ottenuto un algoritmo (naive) per risolv
 Una base determina unicamente un BFS (il BFS si ottiene invertendo la base)
 - di conseguenza: **se BFS' != BFS'' => B' != B''**
 - ma è vero il contrario? se  **B' != B'' => se BFS' != BFS''**? NO!
+    - **se cambio base non necessariamente trovo una nuova soluzione**
 
 **DEF**: A BFS is called degenerate if it contains more than n − m zeroes
 
 **Theorem**: If two distinct bases B′ and B′′ correspond to the same BFS x, then x is degenerate
 
-intuizione: un'algoritmo pensa di star cambiando vertice quando cambia la base, ma in realtà può rimanere nello stesso punto e star facendo fatica inutilmente
+**Intuizione**: un'algoritmo pensa di star cambiando vertice quando cambia la base, ma in realtà può rimanere nello stesso punto e star facendo fatica inutilmente

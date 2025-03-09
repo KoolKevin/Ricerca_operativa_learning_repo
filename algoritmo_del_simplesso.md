@@ -17,16 +17,19 @@ supponiamo x_0 non degenere
 - alzo theta **fino a che non trovo una nuova base!** (ricorda che BFS diversi implicano Basi diverse)
     - se alzo troppo e la componente diventa negativo sto uscendo dal politopo, la soluzione non è più ammissibile
 
-- dove stanno le soluzioni ammissibili NON base sul politopo? sullo spigolo tra i due vertici!
+**OSS**:
+dove stanno le soluzioni ammissibili NON base (ottenuto durante il transitorio di theta) sul politopo? **sullo spigolo tra due vertici (BFS)**
+- se la soluzione è degenere c'è il rischio che io rimanaga fermo su un vertice (vedi sotto) 
 
 **casi particolari**
-1. x_0 degenere
-    - partiamo con la manopola non mossa ma con il valore già a zero
+1. **x_0 degenere**
+    - theta_max = 0 (non posso spostare la manopola)
     - posso essere sfortunato o fortunato in base a se y_ij è minore o maggiore di zero
-    - **se sono sfortunato cambio comunque base**, perchè cambio colonna, ma la soluzione non è cambiata  (d'altronde la BFS era degenere)
-        - ci siamo spostati su una nuova base ma la soluzione non cambia, abbiamo fatto fatica inutile
+        - se sono sfortunato (y_ij > 0): **cambio comunque base**, perchè entra una colonna e ne esce un altra, ma la soluzione non è cambiata siccome la colonna è entrata con theta = 0 
+            - ci siamo spostati su una nuova base ma la soluzione non cambia, abbiamo fatto fatica inutile (d'altronde la BFS era degenere)
+        - se sono fortunato (y_ij < 0): **theta max è definito dalle altre componenti** 
 
-2. tutti gli y_ij < 0
+2. tutti gli y_ij <= 0
     - lo spigolo del politopo va all'infinito
     - l'assunzione 3 è violata 
     - l'algoritmo se ne accorge! Se cambiamo una base e ci ritroviamo in questa situazione il problema è risolto (-inf)
@@ -39,23 +42,26 @@ supponiamo x_0 non degenere
 - modo comodo per trovare i valori y_ij
     - con tableau e base trasformata in matrice identità
 - come faccio a capire come andare verso un vertice migliore? Devo capire quale colonna far entrare
-
+    - utilizza la funzione obiettivo per definire le variazioni di costo nel fare entrare una determinata una colonna. Estendi il tableau di conseguenza 
 
 ...
 
-corollario se ci sono due pivot, la nuova BFS è degener
-- caso infelice, partiamo da una base non degenere ed arriviamo ad una base degenere
+**Corollario**:
+se ci sono due pivot la nuova BFS è degenere dato che con lo stesso theta_max annullo due componenti.
+- caso infelice, partiamo da una base non degenere ed arriviamo ad una base degenere, che come abbiamo visto ci può far fare fatica inutile se cambiamo base in maniera che non cambia la BFS
 
 
 
 
 
 
-### Tableau
+
+
+## Tableau
 Strumento fondamentale per applicare l'algoritmo
 
 è una rappresentazione di A*x = b
-- matrice m*(n+1) la colonna aggiuntiva è b
+- matrice m*(n+1) la colonna aggiuntiva è b che viene posta come colonna 0
 
 ...
 
@@ -63,30 +69,87 @@ Strumento fondamentale per applicare l'algoritmo
 elementary row operations lasciano inalterato il sistema
 - operazioni gratis che danno un'altra forma al tableau
 
-**voglio che in corrispondenza della base ci sia una matrice identità!** In modo da non dover far calcoli di inversione
-- crazy, se riesco a fare questa cosa nella colonna 0 ho il BFS della base attuale, e nelle altre colonne ho i coefficienti y_ij
-- rende anche comodo trovare i rapporti y_i0/y_ij
 
-se cambio base ottengo un nuovo tableau scombinato... che fatica
 
-operazioni:
-- divido la riga del pivot per il pivot
-- per tutte le altre righe sottraggo la nuova riga del pivot moltiplicata per il valore che c'è adesso sulla colonna(?) 
+**voglio che in corrispondenza della base ci sia una matrice identità!** 
+- In questo modo non devo far calcoli di inversione per calcolare x0
+- crazy, se riesco a fare questa cosa, nella colonna 0 **il vettore dei termini noti mi diventa anche il BFS della base attuale**
+    - B^-1*b = x0 -> I\*b = x0 -> b = x0 
+- **nelle altre colonne ho i coefficienti y_ij**
+    - prodotto tra matrice identità è la colonna Aj di cui voglio trovare i coefficienti 
+- rende anche comodo trovare i rapporti y_i0/y_ij! mi basta fare i rapporti sulla stessa riga
+    - osserva la comodità della notazione la colonna 0 del tableau è proprio quella della soluzione e la colonna j è proprio quella che voglio far entrare
+
+
+
+
+### Operazioni di pivoting
+se cambio base ottengo un nuovo tableau scombinato (non ho la matrice identità nella base) ...
+
+**Metodologia per il cambiamento di base nel tableau**:
+1. scelgo una colonna *j* a caso (per adesso) da fare entrare
+2. calcolo theta_max ed ottengo la riga del pivot (l = i: min{y_i0/y_ij})
+3. divido la riga del pivot per il valore del pivot
+    - ottengo la **pivoting row**
+4. per tutte le altre righe sottraggo la pivoting row moltiplicata per il valore che c'è adesso sulla colonna che è entrata (y_ij con i!=L) 
     - considero sempre la riga del pivot dato che non agisce mai sulla base (se non sulla colonna che esce)
 
-a quanto pare esce la colonna di base con indice pari alla riga del pivot (capisci perchè)
-- a quanto pare centra la relazione con theta max
+**NB**: ricorda che esce la colonna di base con indice pari alla riga del pivot data la relazione con theta max
 
 
 **NB**: non abbiamo ancora un metodo per definire una base iniziale
 
 
 
-### come si sceglie la colonna da fare entrare in base?
-bisogno non far peggiorare il valore della soluzione -> dobbiamo considerare la funzione di costo (fino ad ora lasciata da parte)
-- per adesso scegliamo uno a caso con costo negativo
 
-tutti zero in corrispondenza della base
+
+
+### come si sceglie la colonna da fare entrare in base?
+bisogno non far peggiorare il valore della soluzione 
+- dobbiamo considerare la funzione di costo (fino ad ora lasciata da parte)
+- per adesso scegliamo una colonna a caso con costo negativo
+
+Facciamo entrare un'unità per volta (theta =1) una variabile non di base *x_j* (= yij con i da 1 a m) 
+- il costo ottenuto si può riscrivere in funzione del costo della BFS iniziale (z0) e delle componenti della nuova soluzione non base x_j 
+- chiamiamo **c_j  costo relativo della colonna j** la variazione di costo che si ottiene facendo entrare un'unità di x_j
+
+**NB**: Only columns A_j for which c_j < 0 are profitable! 
+- fanno diminuire la funzione di costo
+- la funzione di costo dimuinuisce tanto quanto sono le unità di x_j che riesco a fare entrare
+    - la nuova soluzione fa diminuire il costo di **theta_max*c_j** 
+
+
+
+**Estensione del tableau per tenere conto dei costi relativi**:
+1. estendiamo il tableau aggiungendo nella riga 0 l'equazione del costo
+2. vogliamo impostare a zero tutti i costi relativi in corrispondenza alle colonne della base
+    - fare entrare una colonna della base in base non cambia il costo relativo, c'è gia 
+3. operazioni elementari di riga: Subtract each row i, multiplied by cβ(i) , to row 0
+    - in questa maniera ottieniamo anche i costi relativi in corrispondenza delle colonne fuori base
+    - ed il costo della soluzione corrente, negata
+
+
+**CRITERIO DI OTTIMALITÀ**:
+se tutti i costi relativi delle colonne fuori base sono > 0 -> la soluzione è ottima
+
+
+We still need:
+- a policy to decide which column must enter the base
+- a method to obtain an initial BFS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
