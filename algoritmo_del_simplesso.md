@@ -96,7 +96,6 @@ se cambio base ottengo un nuovo tableau scombinato (non ho la matrice identità 
 
 **NB**: ricorda che esce la colonna di base con indice pari alla riga del pivot data la relazione con theta max
 
-
 **NB**: non abbiamo ancora un metodo per definire una base iniziale
 
 
@@ -156,53 +155,79 @@ We still need:
 ### Quanto possono essere preoccupanti le soluzioni degeneri?
 ...
 
-**possono produrre cicli infiniti!**
+**possono produrre cicli infiniti!** (in base a quali pivoting rules si adottano) 
+- Se si incontrano basi degeneri non è detto che l'algoritmo arrivi alla soluzione ottimale, potrebbe entrare in loop!
 
-Se si incontrano basi degeneri non è detto che l'algoritmo arrivi alla soluzione ottimale!
-
-bisogna scegliere attentamente le colonne da fare entrare in base. Una mi può portare ad una soluzione degenere, l'altra no
+**bisogna scegliere attentamente le colonne da fare entrare in base.**
+- Una mi può portare ad una soluzione degenere, l'altra no
 
 
 
 ### Regole di pivoting
 due decisioni:
+1) which column (among those with cj < 0) must enter the base;
+2) what to do in case of tie among rows (più pivot).
+
 
 ```
 non esiste nessun metodo matematico che ci dice con certezza quale colonna far entrare per far convergere il prima possibile l'algoritmo!  
 ```
 
 Tuttavia, nel caso medio, una buona idea è scegliere quella con il costo minore (Regola di Dantzig)
-- infatti è di gran lunga la scelta migliore
-- curiosità: si potrebbe pensare di scegliere la colonna che produce la diminuzione locale migliore possibile... però ad ogni passo devo guardare m elementi 
-- regola di bland: garantisce la convergenza dell'algoritmo
+- non è solo una buona idea è di gran lunga la scelta migliore che si conosce fino ad oggi
+- curiosità: si potrebbe pensare di scegliere la colonna che produce la diminuzione locale migliore possibile... però computazionalmente molto oneroso 
+- **regola di bland**: garantisce la convergenza dell'algoritmo but convergence is much slower ⇒ only used to escape loops.
+    - the column Aj with minimum index j (among those with cj < 0) enters the base; 
+        - interessante non guardiamo il costo relativo
+    - in case of tie, the column Aj with minimum index j leaves the base.
 
-l'algoritmo, normalmente userà la regola di Dantzig. Nei casi in cui ci si sta accorgendo di essere in un loop -> switch alla regola di Bland
+L'algoritmo, normalmente userà la regola di Dantzig. Nei casi in cui ci si sta accorgendo di essere in un loop -> switch alla regola di Bland
 
 
 
 
 
-Rimane come capire una BFS di partenza con la matrice identità come base
+
+
+
+
+
+
+### Metodo delle due fasi
+Rimane da capire come ottenere una BFS di partenza con la matrice identità come base
 - difficile a causa delle assunzioni 1 e 2
+    - la matrice A deve avere m colonne linearmente indipendenti
+    - regione ammissibile non vuota
 - forse non esiste una base
 - anche se esiste magari la regione ammissibile è vuota
 
-Dobbiamo accorgercene!
+Dobbiamo accorgercene! Cosa fare?
 
-### Metodo delle due fasi
-...
+(voglio che il vettore dei termini noti abbia tutti i componenti positivi)
 
-Aggiungo al sistema m variabili artificiali, ogni riga del sistema passa da x1 + x2 = 3 -> x1 + x2 + xa = 3
+
+Aggiungo al sistema **_m_** variabili artificiali, ogni riga del sistema passa da x1 + x2 = 3 -> x1 + x2 + xa = 3
 - chiaramente non è un operazione elementare di riga, le soluzioni del sistema cambiano
 
 **NB**: sistema "dopato" potrebbe anche andarmi bene se la base non fosse nelle variabili artificiali ma in quelle vere.
 - questo perchè le variabili fuori base, e quindi anche quelle artificiali, valgono zero
-- come faccio? operazioni di pivoting! 
+- come faccio? -> operazioni di pivoting! 
 
-uso una funzione obiettivo artificiale con cui cerco soluzioni del mio sistema originale (variabili artificiali hanno somma zero)
+Minimizzo con la stessa strategia vista fino ad adesso **una funzione obiettivo artificiale** che come costo ha la somma di tutte le variabili artificili della soluzione:
+- con questa funzione obiettivo cerco soluzioni del mio sistema originale (variabili artificiali hanno somma zero)
 
-...
 
+Ho tre casi:
+1. La funzione obiettivo artificiale minimizzata vale zero e nessuna delle variabili artificiali è in base
+    - (caso ottimo) abbiamo ottenuto una BFS per il problema originale
+    - passare alla fase 2
+2. La funzione obiettivo artificiale minimizzata rimane maggiore di zero
+    - è impossibile soddisfare i vincoli del problema senza variabili artificiali
+    - non esiste alcuna soluzione ammissibile
+    - **assuzione 2 violata**
+3. La funzione obiettivo artificiale minimizzata vale zero ma delle variabili artificiali sono in base
+    - puzza di degenerazione (le variabili artificiali hanno valore zero)
+    - bisogna lavorare
 
 può accadere che la soluzione ottima ha comunque funzione obiettivo maggiore di zero
 - Assunzione 2 violata
@@ -210,17 +235,20 @@ può accadere che la soluzione ottima ha comunque funzione obiettivo maggiore di
 può anche accadere che il costo sia zero ma che alcune variabili artificiali rimangano comunque in base (situazione degenere)
 - corrisponde alla violazione dell'assunzione 1
 
-... struttura tipica dei costi relativi (di quanto varia il costo se faccio entrare la variabili in base (varia quanto il coefficiente))
+
 
 **fase 2**
-le variabili artificiale sembrerebbe che possano essere scartate via (semplicistico)
+uguale a quanto visto prima
+- considero per il pivoting solo le colonne riguardanti le variabili autentiche
+
+le variabili artificiale sembrerebbe che possano essere scartate via (semplicistico); in realtà vedremo che saranno utili
 
 introduciamo solamente le variabili artificiali necessarie nella fase 2
 
-
-i termini noti devono essere positivi?? **controlla**
-
-...
+i termini noti devono essere positivi? si in questa metodologia a 2 fasi
 
 
-nel terzo esempio posso eseguire un pivotin anche se l'elemento è negativo dato che 
+
+
+
+**Se si verifica il terzo caso: posso eseguire un pivoting speciale anche se l'elemento è negativo dato che ... perchè? chiedi meglio**
