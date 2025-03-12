@@ -108,7 +108,7 @@ bisogno non far peggiorare il valore della soluzione
 - dobbiamo considerare la funzione di costo (fino ad ora lasciata da parte)
 - per adesso scegliamo una colonna a caso con costo negativo
 
-Facciamo entrare un'unità per volta (theta =1) una variabile non di base *x_j* (= yij con i da 1 a m) 
+Facciamo entrare un'unità per volta (theta =1) una colonna fuori base *x_j* (= yij con i da 1 a m) 
 - il costo ottenuto si può riscrivere in funzione del costo della BFS iniziale (z0) e delle componenti della nuova soluzione non base x_j 
 - chiamiamo **c_j  costo relativo della colonna j** la variazione di costo che si ottiene facendo entrare un'unità di x_j
 
@@ -252,3 +252,10 @@ i termini noti devono essere positivi? si in questa metodologia a 2 fasi
 
 
 **Se si verifica il terzo caso: posso eseguire un pivoting speciale anche se l'elemento è negativo dato che ... perchè? chiedi meglio**
+
+
+
+non finisce qua! Dobbiamo accorgerci anche della violazione dell'assunzione 1
+
+- potrebbe capitare che non sia possibile trovare un pivot valido per portare fuori la variabile artificiale fuori base
+    - questo è il caso che viola l'assunzione 1
