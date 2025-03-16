@@ -205,7 +205,6 @@ Dobbiamo accorgercene! Cosa fare?
 
 (voglio che il vettore dei termini noti abbia tutti i componenti positivi)
 
-
 Aggiungo al sistema **_m_** variabili artificiali, ogni riga del sistema passa da x1 + x2 = 3 -> x1 + x2 + xa = 3
 - chiaramente non è un operazione elementare di riga, le soluzioni del sistema cambiano
 
@@ -230,11 +229,19 @@ Ho tre casi:
     - bisogna lavorare
 
 può accadere che la soluzione ottima ha comunque funzione obiettivo maggiore di zero
-- Assunzione 2 violata
+- **Assunzione 2 violata**
 
 può anche accadere che il costo sia zero ma che alcune variabili artificiali rimangano comunque in base (situazione degenere)
-- corrisponde alla violazione dell'assunzione 1
 
+Se si verifica il terzo caso devo eseguire un **pivoting speciale** per sostituire la variabile artificiale in base con una variabile autentica
+- per fare questo devo considerare un y_ij 
+    - con *i* indice di riga pari alla colonna corrispondente alla variabile artificiale in base 
+    - con *j* qualunque tale che y_ij != 0 (anche se < 0 e con costo relativo > 0)  
+- Se in questa maniera si riesce ad eliminare tutte le variabili artificiali dalla base, siamo contenti -> fase 2
+- **Altrimenti**, significa che esistono delle variabili artificiali in base tali che tutti gli y_ij della riga i candidati per il pivoting speciale valgono 0
+- questo però significa avere una riga di 0 nella matrice A, ma allore __non era di rango pieno = *m*__
+    - **Assunzione 1 violata**
+- in questo caso abbiamo un vincolo ridondante e la relatiava **riga può essere eliminata assieme alla variabile artificiale corrispondente**
 
 
 **fase 2**
@@ -247,8 +254,3 @@ introduciamo solamente le variabili artificiali necessarie nella fase 2
 
 i termini noti devono essere positivi? si in questa metodologia a 2 fasi
 
-
-
-
-
-**Se si verifica il terzo caso: posso eseguire un pivoting speciale anche se l'elemento è negativo dato che ... perchè? chiedi meglio**
