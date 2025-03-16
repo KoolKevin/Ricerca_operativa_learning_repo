@@ -142,6 +142,35 @@ We still need:
 
 
 
+### ROBA DI DEEPSEEK RIGUARDANTE l'interpretazione dei costi e del tableau
+```che cosa rappresenta x_j?```
+Nel contesto del metodo del simplesso per la programmazione lineare, xj rappresenta una variabile decisionale che può entrare nella base durante un'operazione di pivot. Quando xj entra nella base, sostituisce una delle variabili attualmente in base, modificando la soluzione corrente.
+
+La quantità c‾j=cj −zj è chiamata costo relativo della colonna j. Se c‾j<0, l'introduzione di xj nella base è considerata vantaggiosa perché riduce il valore della funzione obiettivo. Il valore di xj che entra nella base è determinato dal rapporto ϑ max, che indica quanto xj può aumentare senza violare i vincoli del problema.
+
+
+
+```nel tableau che relazione c'è tra la colonna j e la variabile decisionale x_j?```
+Nel tableau del metodo del simplesso, la colonna  j è associata alla variabile decisionale x j. Ecco come sono correlate:
+
+- Colonna j: Rappresenta i coefficienti della variabile xj nei vincoli del problema di programmazione lineare. Ogni elemento della colonna 
+j corrisponde al coefficiente di xj in un particolare vincolo.
+
+- Variabile decisionale xj: È una delle variabili del problema che può assumere valori non negativi. Durante l'esecuzione del metodo del simplesso, xj può essere una variabile non di base (con valore zero) o una variabile di base (con valore positivo).
+
+- Relazione nel tableau: Se xj è una variabile non di base, la colonna j nel tableau mostra come xj influenza i vincoli se dovesse entrare nella base. Se xj è una variabile di base, la colonna j riflette la sua attuale influenza sulla soluzione corrente.
+
+- Costo relativo c‾j: Questo valore, calcolato come cj−zj, indica se introdurre xj nella base migliorerà la soluzione. Se c‾j<0, l'introduzione di xj nella base ridurrà il valore della funzione obiettivo.
+
+
+
+
+
+
+
+
+
+
 
 
 
