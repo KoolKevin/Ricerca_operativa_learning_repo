@@ -238,7 +238,7 @@ Se si verifica il terzo caso devo eseguire un **pivoting speciale** per sostitui
     - con *i* indice di riga pari alla colonna corrispondente alla variabile artificiale in base 
     - con *j* qualunque tale che y_ij != 0 (anche se < 0 e con costo relativo > 0)  
 - Se in questa maniera si riesce ad eliminare tutte le variabili artificiali dalla base, siamo contenti -> fase 2
-- **Altrimenti**, significa che esistono delle variabili artificiali in base tali che tutti gli y_ij della riga i candidati per il pivoting speciale valgono 0
+- **Altrimenti**, significa che esistono delle variabili artificiali in base tali che: tutti gli y_ij della riga i candidati per il pivoting speciale valgono 0 (non esiste un pivot valido)
 - questo però significa avere una riga di 0 nella matrice A, ma allore __non era di rango pieno = *m*__
     - **Assunzione 1 violata**
 - in questo caso abbiamo un vincolo ridondante e la relatiava **riga può essere eliminata assieme alla variabile artificiale corrispondente**
@@ -253,12 +253,3 @@ le variabili artificiale sembrerebbe che possano essere scartate via (semplicist
 introduciamo solamente le variabili artificiali necessarie nella fase 2
 
 i termini noti devono essere positivi? si in questa metodologia a 2 fasi
-
-
-
-
-
-non finisce qua! Dobbiamo accorgerci anche della violazione dell'assunzione 1
-
-- potrebbe capitare che non sia possibile trovare un pivot valido per portare fuori la variabile artificiale fuori base
-    - questo è il caso che viola l'assunzione 1
