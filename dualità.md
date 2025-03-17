@@ -36,18 +36,6 @@ Se ci inventiamo anche una nuova funzione obiettivo: max pi'*b (scambiamo i term
 **conclusione**: è dimostrabile che la base B da cui siamo partite corrisponde ad una BFS ottimale <->  pi' = c'_b*B^-1 è una soluzione ottima al problema duale
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ...
 
 es. 
@@ -56,3 +44,106 @@ es.
 la tabella è da imparare a memoria perchè aiuta
 
 x <=> 0 -> variabile libera
+
+
+nel problema duale i vincoli sono dati dalle colonne della matrice (e non più dalle righe)
+
+- le relazioni sono tra vincolo primale e variabile duale (e viceversa)
+- un vincolo forte primale mi da una condizione debole sulla variabile (e viceversa)
+
+
+
+...
+
+
+per risolvere un problema PL noi abbiamo solo il simplesso come tecnica e quindi il problema duale va trasformato in forma standard
+
+
+## Dualità forte
+che relazione c'è tra problema duale e primale?
+
+**HP**: se esiste una soluzione ottima **finita**
+Allora: ...
+
+la prima proprietà è definita dualità debole
+
+Relazione slide 11 molto importante:
+- le soluzione ammissibili del primale sono >= rispetto alla soluzioni del duale
+- intuitivamente solamente l'ottimo soddisfa sia i vincoli del duale che del primale
+
+
+**Conclusione**: se il primale ha ... allora il duale ... e combaciano. Rimangono i casi fuori dall'ipotesi
+
+
+**OSS**: il duale del duale è il primale. 
+- servirà per i 'no' della prima colonna in slide 13
+
+
+
+### Relazioni primale-duale:
+...
+
+non possono essere illimitati entrambi (uno schiaccia l'altro, ricorda la figura)
+
+gli altri casi possono verificarsi
+
+
+
+
+
+
+### Come si interpreta il problema duale?
+- al posto del allevatore considero un venditore
+- al posto di n cibi considero m pillole con i nutrienti
+- al posto di minimizzare la spesa, massimizzo il profitto
+- ...
+
+**foto sul telefono**
+
+
+
+
+### Lemma di Farkas
+...
+
+se il duale si stacca da zero allora deve per forza deve andare a +inf (altri valori finiti dovrebbero essere uguali nel primale)
+
+
+### Complementary slackness/condizioni di ortogonalità
+fino ad ora sappiamo solo che primale e duale hanno lo stesso valore della soluzione. Ma come faccio a trovare la soluzione del duale (che da quel valore)?
+lo strumento ce lo da il seguente teorema
+
+- prodotto tra variabile duale e scarto primale deve valore zero
+- viceversa
+
+questo teorema mi da uno strumento potente dato che che se ... (uno dei due termini deve fare zero il che mi porta a delle conclusioni nella soluzione ottima)
+
+
+**conclusione**: Le condizioni di ortogonoalità ci forniscono la soluzione di un problema data la soluzione del suo duale
+
+
+
+### Tableau e informazioni sulla dualità
+...
+
+- cj = cj - pi*Aj ma gli Aj sono quelli di una matrice identità
+- se moltiplico i due tableua per l'inversa della base ottima ...
+
+...
+
+**conclusione**: il confronto tra il tableau iniziale e il tableua nella sua forma che trova la soluzione ottima mi permette di recuperare la soluzione ottima del problema duale!
+- è per questo che non possiamo scartare le variabili artificiali, mi servono per il duale
+
+
+
+
+
+
+
+## Algoritmo del simplesso duale
+chiave per risolvere i problemi di PL intera
+
+idea: partiamo da una soluzione duale che è più che ottima per il primale ma che non soddisfa i suoi vincoli. Poi cerchiamo di spostarla nella direzione dell'ammissibilità
+
+Capisci come si scelgono i pivot
+- l'unica differenza è che prendiamo dei pivot negativi
