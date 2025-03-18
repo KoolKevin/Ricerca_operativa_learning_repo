@@ -147,3 +147,39 @@ idea: partiamo da una soluzione duale che è più che ottima per il primale ma c
 
 Capisci come si scelgono i pivot
 - l'unica differenza è che prendiamo dei pivot negativi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Analisi di sensitività
+fino ad ora abbiamo visto la dualità come uno strumento teorico che ci servirà per la PL intera. Vediamo ora come la teoria della dualità ci porta a risolvere anche dei problemi molto pratici!
+
+concetto di **intervallo di confidenza** di un dato in input
+- se il dato varia all'interno del suo intervallo **la base** rimane ottima
+- **NB**: la base non cambia, la BFS e il suo valore si. Questo però non è un problema in quanto è facilmente ricalcolabile
+
+
+Andiamo a vedere cosa succede se cambio una valore di _b_ o un costo _c_.
+- ho due equazioni nel tableau
+- sa cambio b si modifica la soluzione x, ma il criterio di ottimalità rimane soddisfatto! e viceversa!
+
+
+OSS: se facendo un analisi di sensitività finisco nel caso negativo non è detto che non mi convenga far variare un dato di input, semplicemente devo ricalcolare la soluzione ottima.
+
+### Prezzi ombra
+prezzi ombra e funzione obiettivo del problema duale (che mi darà lo stesso valore della funzione obiettivo del primale)
+
+
+
+
+**Algoritmo primale duale da saltare!!!**
