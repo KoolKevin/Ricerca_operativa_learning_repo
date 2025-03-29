@@ -15,21 +15,25 @@ supponiamo x_0 non degenere
 - nuova relazione che produce *b* con *m+1* colonne con theta che fa da manopola
 - ci sarà un theta massimo che mi annulla la prima componente e **mi fa ritornare ad un BFS con m componenti**
 - alzo theta **fino a che non trovo una nuova base!** (ricorda che BFS diversi implicano Basi diverse)
-    - se alzo troppo e la componente diventa negativo sto uscendo dal politopo, la soluzione non è più ammissibile
+    - se alzo troppo e la componente diventa negativo sto uscendo dal politopo, la soluzione non è più ammissibile (x >= 0)
 
 **OSS**:
 dove stanno le soluzioni ammissibili NON base (ottenuto durante il transitorio di theta) sul politopo? **sullo spigolo tra due vertici (BFS)**
 - se la soluzione è degenere c'è il rischio che io rimanaga fermo su un vertice (vedi sotto) 
 
 **casi particolari**
-1. **x_0 degenere**
-    - theta_max = 0 (non posso spostare la manopola)
-    - posso essere sfortunato o fortunato in base a se y_ij è minore o maggiore di zero
-        - se sono sfortunato (y_ij > 0): **cambio comunque base**, perchè entra una colonna e ne esce un altra, ma la soluzione non è cambiata siccome la colonna è entrata con theta = 0 
+1. **x_0 degenere** (esistono delle componenti y_i'0 == 0)
+    - posso essere sfortunato o fortunato in base a se y_i'j (componente corrispondente alla parte degenere della BFS x_0) è minore o maggiore di zero
+        - se sono sfortunato (y_i'j > 0):
+            - theta_max = 0, non posso aumentare per niente theta dato che divento subito negativo ed esco dal politopo
+            - **cambio comunque base**, perchè entra una colonna e ne esce un altra,
+            - ma **la soluzione non è cambiata siccome la colonna è entrata con theta = 0** 
             - ci siamo spostati su una nuova base ma la soluzione non cambia, abbiamo fatto fatica inutile (d'altronde la BFS era degenere)
-        - se sono fortunato (y_ij < 0): **theta max è definito dalle altre componenti** 
+        - se sono fortunato (y_i'j < 0): 
+            - **theta max è definito dalle altre componenti** 
 
-2. tutti gli y_ij <= 0
+2. **tutti** gli y_ij <= 0
+    - posso continuare a girare la manopola all'infinito e non esco mai dal politopo (rimango > 0)
     - lo spigolo del politopo va all'infinito
     - l'assunzione 3 è violata 
     - l'algoritmo se ne accorge! Se cambiamo una base e ci ritroviamo in questa situazione il problema è risolto (-inf)
@@ -63,13 +67,8 @@ Strumento fondamentale per applicare l'algoritmo
 è una rappresentazione di A*x = b
 - matrice m*(n+1) la colonna aggiuntiva è b che viene posta come colonna 0
 
-...
-
-
 elementary row operations lasciano inalterato il sistema
 - operazioni gratis che danno un'altra forma al tableau
-
-
 
 **voglio che in corrispondenza della base ci sia una matrice identità!** 
 - In questo modo non devo far calcoli di inversione per calcolare x0
@@ -79,9 +78,6 @@ elementary row operations lasciano inalterato il sistema
     - prodotto tra matrice identità è la colonna Aj di cui voglio trovare i coefficienti 
 - rende anche comodo trovare i rapporti y_i0/y_ij! mi basta fare i rapporti sulla stessa riga
     - osserva la comodità della notazione la colonna 0 del tableau è proprio quella della soluzione e la colonna j è proprio quella che voglio far entrare
-
-
-
 
 ### Operazioni di pivoting
 se cambio base ottengo un nuovo tableau scombinato (non ho la matrice identità nella base) ...
@@ -108,14 +104,25 @@ bisogno non far peggiorare il valore della soluzione
 - dobbiamo considerare la funzione di costo (fino ad ora lasciata da parte)
 - per adesso scegliamo una colonna a caso con costo negativo
 
-Facciamo entrare un'unità per volta (theta =1) una colonna fuori base *x_j* (= yij con i da 1 a m) 
-- il costo ottenuto si può riscrivere in funzione del costo della BFS iniziale (z0) e delle componenti della nuova soluzione non base x_j 
-- chiamiamo **c_j  costo relativo della colonna j** la variazione di costo che si ottiene facendo entrare un'unità di x_j
+Facciamo entrare un'unità per volta (theta =1) una colonna fuori base *Aj* (= yij con i da 1 a m) 
+- questo corrisponde a **considerare nella BFS anche la variabile decisionale xj**
+    - quest'ultima essendo ora in base dovrà venire **compensata** dalle altre per far si che la soluzione sia ancora ammissibile
+    - passiamo da x0 = (y00, y10, ... , y(m-1)0, 0 , ...)
+    - a x0' = (y00-y0j, y10-y1j, ... , "m-1", 0, ..., 1 , ... , 0)
+        - ho inserito in base una unità di xj 
+- il costo ottenuto si può riscrivere in funzione del costo della BFS iniziale (z0), del costo del compenso e del costo della nuova variabile decisionale aggiunta alla base
+- chiamiamo **c_j'  costo relativo della colonna j** la variazione di costo che si ottiene facendo entrare un'unità di x_j
+
+**NB**: Quando si dice che "entra 𝐴𝑗 in base", si intende che la colonna 𝐴𝑗 della matrice dei vincoli viene inclusa nella base della soluzione attuale. Questo implica che la variabile 𝑥𝑗 associata a 𝐴𝑗 diventa una variabile base, ovvero assume un valore positivo nella soluzione di base ammissibile, mentre una delle attuali variabili di base deve uscire per mantenere il numero di variabili di base uguale al numero di vincoli.
+- Quindi, in sintesi:
+    - Dire che "entra 𝐴𝑗 in base" significa che la colonna 𝐴𝑗 della matrice dei vincoli viene inclusa nella base.
+    - Questo corrisponde al fatto che la variabile 𝑥𝑗, associata a quella colonna, entra nella base e assume un valore positivo nella soluzione.
+- L'operazione di pivoting, che è il cuore dell'algoritmo del simplesso, effettua proprio questo scambio tra variabili di base e non di base per migliorare la soluzione ottimale. 
 
 **NB**: Only columns A_j for which c_j < 0 are profitable! 
 - fanno diminuire la funzione di costo
 - la funzione di costo dimuinuisce tanto quanto sono le unità di x_j che riesco a fare entrare
-    - la nuova soluzione fa diminuire il costo di **theta_max*c_j** 
+    - la nuova soluzione fa diminuire il costo di **theta_max\*c_j** 
 
 
 
@@ -282,3 +289,20 @@ le variabili artificiale sembrerebbe che possano essere scartate via (semplicist
 introduciamo solamente le variabili artificiali necessarie nella fase 2
 
 i termini noti devono essere positivi? si in questa metodologia a 2 fasi
+
+
+
+
+
+
+
+
+## NOTAZIONE:i
+- x0    == BFS di partenza del problema non ottimale
+- y_i0  == gli m (su n) componenti della BFS x0 
+- y_ij  == coefficienti della combinazione lineare delle colonne in base per ottenere la j-esima colonna fuori base A_j 
+        == 
+- z0    == costo della BFS x0 relativa alla base di partenza                            == sum_i(y_i0 * c_beta(i))
+- zj    == costo dovuto ai compensi legati all'aver aggiunto alla base un'unità di xj   == sum_i(y_ij * c_beta(i))
+- z0'   == nuovo costo dopo aver aggiunto un'unità di xj alla base                      == z0 - zj + cj == z0 + cj'
+- cj'   == costo relativo dovuto al fare entrare un un'unità di xj alla base            == cj - zj 
