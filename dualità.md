@@ -10,6 +10,10 @@ una rappresentazione diversa di un qualcosa che ci da delle informazioni non evi
 
 
 ### Interpretazione algebrica dell'algoritmo del simplesso
+Differenza tra: 
+- base B        == m colonne linearmente indipendenti della matrice A
+- e tableau Y   == la matrice A a cui sono state applicate le operazioni elementari di riga per avere I in corrispondenza della base 
+
 Il tableau si ottiene non solo tramite operazioni elementari di riga ma anche come: Y = B^-1 * A
 - le colonne di A corrispondenti alla base si trasformano nella matrice identità
 
@@ -32,6 +36,12 @@ Se ci inventiamo anche una nuova funzione obiettivo: max pi'*b (scambiamo i term
     pi'*A <= c'
     con pi' <=> 0 -> variabile libera
 ```
+
+- costi al posto dei termini noti
+- max al posto di min
+- termini noti al posto dei costi
+- righe e colonne scambiate nella matrice dei vincoli
+- un po' di altra roba
 
 **conclusione**: è dimostrabile che la base B da cui siamo partite corrisponde ad una BFS ottimale <->  pi' = c'_b*B^-1 è una soluzione ottima al problema duale
 
@@ -59,37 +69,40 @@ nel problema duale i vincoli sono dati dalle colonne della matrice (e non più d
 per risolvere un problema PL noi abbiamo solo il simplesso come tecnica e quindi il problema duale va trasformato in forma standard
 
 
-## Dualità forte
+
+
+
+## Dualità forte e dualità debole
 che relazione c'è tra problema duale e primale?
 
-**HP**: se esiste una soluzione ottima **finita**
-Allora: ...
+**Theorem**
+**HP**: If an LP has a finite optimal solution, then
+1. its dual has a finite optimal solution; (dualità debole)
+    - si può dimostrare vedendo che: **cost in the primal ≥ cost in the dual!**
+    - **the dual cannot have an unbounded solution.**
+2. the two solutions have the same value
+    - questo si vede con un passaggio
 
-la prima proprietà è definita dualità debole
+La figura spacca: ![alt text](immagini/relazione_soluzione_primale_duale.png)
 
 Relazione slide 11 molto importante:
 - le soluzione ammissibili del primale sono >= rispetto alla soluzioni del duale
-- intuitivamente solamente l'ottimo soddisfa sia i vincoli del duale che del primale
+- le soluzioni del primale non sono ammissibili per il duale anche se gli farebbero gola e viceversa
+- intuitivamente: solamente l'ottimo soddisfa sia i vincoli del duale che del primale
 
 
-**Conclusione**: se il primale ha ... allora il duale ... e combaciano. Rimangono i casi fuori dall'ipotesi
-
-
-**OSS**: il duale del duale è il primale. 
-- servirà per i 'no' della prima colonna in slide 13
-
+**Conclusione**: se il primale ha una BFS ottima allora ce l'ha anche il duale e i loro valori combaciano.
+- **Rimangono i casi fuori dall'ipotesi!**
 
 
 ### Relazioni primale-duale:
-...
-
-non possono essere illimitati entrambi (uno schiaccia l'altro, ricorda la figura)
-
-gli altri casi possono verificarsi
-
-
-
-
+abbiamo una matrice 3x3 che definisce le possibili coppie di relazioni primale duale
+- caso standard è quello visto sopra in cui entrambi hanno un ottimo finito che ha valore coincidente
+- non possono essere illimitati entrambi e non può essere che uno ha ottimo finito e l'altro è illimitato  (uno schiaccia l'altro)
+    - **cost in the primal ≥ cost in the dual!**
+    - oppure basta pensare che il duale del duale è il primale! Se uno ha ottimo finito, anche l'altro ce lo deve avere
+- è possibile che i problemi siano **entrambi impossibili**
+- è possibile che **uno sia illimitato e l'altro impossibile** (di nuovo, uno schiaccia l'altro)
 
 
 ### Come si interpreta il problema duale?

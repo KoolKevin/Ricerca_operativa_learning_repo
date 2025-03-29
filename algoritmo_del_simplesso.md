@@ -134,6 +134,8 @@ Facciamo entrare un'unità per volta (theta =1) una colonna fuori base *Aj* (= y
     - in questa maniera ottieniamo anche i costi relativi in corrispondenza delle colonne fuori base
     - ed il costo della soluzione corrente, negata
 
+**significato righe del tableau | chatgpt**
+Righe delle variabili di base: Ogni riga corrisponde a una variabile attualmente nella base e rappresenta una combinazione lineare delle variabili fuori base per ottenere il valore della variabile in base. I coefficienti della riga indicano come si combinano le variabili per mantenere la soluzione ammissibile.
 
 **CRITERIO DI OTTIMALITÀ**:
 se tutti i costi relativi delle colonne fuori base sono > 0 -> la soluzione è ottima
@@ -271,8 +273,24 @@ può anche accadere che il costo sia zero ma che alcune variabili artificiali ri
 
 Se si verifica il terzo caso devo eseguire un **pivoting speciale** per sostituire la variabile artificiale in base con una variabile autentica
 - per fare questo devo considerare un y_ij 
-    - con *i* indice di riga pari alla colonna corrispondente alla variabile artificiale in base 
-    - con *j* qualunque tale che y_ij != 0 (anche se < 0 e con costo relativo > 0)  
+    - con *i* indice di riga pari alla colonna corrispondente alla variabile artificiale in base che voglio eliminare 
+    - con *j* qualunque tale che y_ij != 0 
+        - anche se < 0 e con costo relativo > 0
+        - tanto siamo degeneri -> yi0 = 0 -> il costo finale non cambia   
+    - **NB**: per questo pivoting, è bene ricordare che un pivoting serve a scambiare una variabile fuori base con una dentro la base, normalmente per migliorare la funzione obiettivo, ma in questo caso per eliminare una variabile artificiale
+        - normalmente la variabile da togliere dalla base si decide con il test del rapporto (la prima che si annullerebbe con theta_max) che permette poi di ottenere solamente **soluzioni ammissibili**. In questo caso la variabile da togliere è quella artificiale in base
+            - **riga del pivot ben definita**
+        - normalmente, la variabile da inserire in base (colonna) si trova vedendo qual'è quella con il costo relativo minore, in questo caso la variabile da inserire in base è **una qualunque di quelle non artificiali**
+
+# CHIEDERE ALL'ESERCITAZIONE
+
+
+            - **non è importante il costo relativo**
+            - **non è importante essere > 0**
+
+
+
+
 - Se in questa maniera si riesce ad eliminare tutte le variabili artificiali dalla base, siamo contenti -> fase 2
 - **Altrimenti**, significa che esistono delle variabili artificiali in base tali che: tutti gli y_ij della riga i candidati per il pivoting speciale valgono 0 (non esiste un pivot valido)
 - questo però significa avere una riga di 0 nella matrice A, ma allore __non era di rango pieno = *m*__
