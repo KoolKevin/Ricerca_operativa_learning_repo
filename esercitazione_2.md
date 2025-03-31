@@ -19,3 +19,5 @@ esercizio 4:
 consiglio spassionato per l'esame: disegnare sempre il problema dopo aver definito il modello LP
 
 rette isoprofitto
+
+consiglio spassionato 2: fare con cautela i calcoli relativi alle operazioni di pivoting, altrimenti sbagli tutto
