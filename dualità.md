@@ -213,22 +213,52 @@ Questo si traduce in:
 ## Analisi di sensitività
 fino ad ora abbiamo visto la dualità come uno strumento teorico che ci servirà per la PL intera. Vediamo ora come la teoria della dualità ci porta a risolvere anche dei problemi molto pratici!
 
-concetto di **intervallo di confidenza** di un dato in input
-- se il dato varia all'interno del suo intervallo **la base** rimane ottima
-- **NB**: la base non cambia, la BFS e il suo valore si. Questo però non è un problema in quanto è facilmente ricalcolabile
+Con analisi di sensitività si intende: una metodologia con cui valutare il risultato della variazione di un dato di input
 
+Concetto di **intervallo di confidenza** di un dato in input (A, b, c):
+- se il dato varia all'interno del suo intervallo **la base rimane ottima**
+- **NB**: la base non cambia, **ma la BFS e il suo valore si**. Questo però non è un problema in quanto entrambi sono facilmente ricalcolabili conoscendo la base ottima
 
 Andiamo a vedere cosa succede se cambio una valore di _b_ o un costo _c_.
-- ho due equazioni nel tableau
-- sa cambio b si modifica la soluzione x, ma il criterio di ottimalità rimane soddisfatto! e viceversa!
+- ho due equazioni nel tableau: 
+    - se cambio b si modifica la soluzione x0, **ma il criterio di ottimalità rimane soddisfatto!**
+        - la base corrente rimane ottima se la soluzione rimane valida -> x0 = B^-1*b' >= 0 (con b' = b modificato)
+    - se cambio un costo c, si modificano solamente i costi relativi ma la soluzione rimane valida 
+        - la base corrente rimane ottima se il criterio di ottimalità rimane valido
+        - notare che il valore della BFS può cambiare solamente se si modifica un costo relativo ad una variabile in base
 
+**OSS**: We will not see how to determine the confidence intervals: they are provided by any software for linear programming
+**OSS**: The analysis becomes more complex when more values are changed at the same time: it is frequently better to solve the LP with the new data.
+**OSS**: se facendo un analisi di sensitività finisco nel caso negativo (uno dei due) non sto dicendo che non mi conviene far variare un dato di input, piuttosto, semplicemente devo ricalcolare la soluzione ottima.
 
-OSS: se facendo un analisi di sensitività finisco nel caso negativo non è detto che non mi convenga far variare un dato di input, semplicemente devo ricalcolare la soluzione ottima.
 
 ### Prezzi ombra
+considera il seguente problema: dato un vettore di termini noti b relativo ai vincoli di un problema di produzione (PL), e una determinata funzione di profitto, con il simplesso noi siamo in grado di trovare la soluzione ottima, ovvero quella che da il profitto maggiore. Spesso però il vettore b dei limiti non è un fissato rigidamente ma è flessibile, ci si potrebbe allora chiedere se potrebbe convenire modificare un certo limite b_i (ad esempio produrre di più/meno) considerando sia il costo della modifica che la soluzione ottima corrente.
+
+**Definition**: the shadow price for resource i is the increase of the objective function value the could be obtained by increasing the available amount bi of the resource **di un unità(a quanto pare)**, **provided the new value lies inside the confidence interval of the sensitivity analysis**.
+- Why do we use the term “price” for a profit increase?
+- When a shadow price is positive, the cost of the resource increase must be considered. 
+- For example, suppose the shadow price for resource i is 3:
+    - if the unit cost for increasing the resource is lower than 3 then increasing it would be convenient, otherwise it would not.
+- **Shadow price = maximum price we are willing to pay for each additional unit of a resource.**
+
+
+### Prezzi ombra e dualità
+La dualità offre una tecnica immediata per determinare i prezzi ombra:
+- Remind: The objective function of the dual is __π′*b__; primal and dual optimal solutions have the same value.
+- the objective function coefficient for πi is bi (the right-end side of primal constraint i). Hence
+- **Property**: the optimal value of dual variable πi is the shadow price for primal constraint i
+    - siccome soluzione ottima primale e duale hanno lo stesso valore, l'incremento unitario di bi mi fa aumentare il valore della soluzione duale (e quindi anche del primale) di πi.
+    - ma questa è proprio la definizione di shadow price 
+
+
+
 prezzi ombra e funzione obiettivo del problema duale (che mi darà lo stesso valore della funzione obiettivo del primale)
 
 
 
 
-**Algoritmo primale duale da saltare!!!**
+
+
+
+**Algoritmo primale duale da saltare... godo**
