@@ -187,9 +187,6 @@ Questo si traduce in:
     - questa scelta garantisce il minimo incremento di costo e quindi ci fa stare sereni dato che evita di esagerare e di arrivare ad una soluzione ammissibile per il primale ma non ottima
     - **NB**: se tutti gli yij sono > 0, allora la soluzione per il primale **non esiste** (e il duale è illimitato)
 
-
-
-
 **NB**: No “two-phase” method is needed, the dual simplex algorithm is normally used when:
 - we are given the optimal tableau of a primal LP; 
 - **one or more constraints are added so the solution becomes infeasible;**
@@ -217,7 +214,7 @@ Con analisi di sensitività si intende: una metodologia con cui valutare il risu
 
 Concetto di **intervallo di confidenza** di un dato in input (A, b, c):
 - se il dato varia all'interno del suo intervallo **la base rimane ottima**
-- **NB**: la base non cambia, **ma la BFS e il suo valore si**. Questo però non è un problema in quanto entrambi sono facilmente ricalcolabili conoscendo la base ottima
+- **NB**: la base non cambia, **ma la BFS e il suo valore si**. Questo però non è un problema in quanto entrambi sono facilmente ricalcolabili conoscendo la base ottima (x = B^-1*b, e z = c*x)
 
 Andiamo a vedere cosa succede se cambio una valore di _b_ o un costo _c_.
 - ho due equazioni nel tableau: 
