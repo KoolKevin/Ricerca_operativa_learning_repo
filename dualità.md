@@ -117,31 +117,48 @@ abbiamo una matrice 3x3 che definisce le possibili coppie di relazioni primale d
 
 
 ### Lemma di Farkas
-...
+Lemma usato nella teoria della dualità e nella dimostrazione di condizioni di fattibilità nei problemi di ottimizzazione.
 
-se il duale si stacca da zero allora deve per forza deve andare a +inf (altri valori finiti dovrebbero essere uguali nel primale)
+Si tratta di un criterio di separazione tra un insieme di soluzioni ammissibili e un vincolo lineare. Il lemma dice che, data una matrice 𝐴 e un vettore 
+𝑏:
+- O il sistema ha una soluzione (cioè esiste un 𝑥 ≥ 0 che soddisfa 𝐴𝑥=𝑏),
+- Oppure esiste un vettore 𝑦, soluzione del problema duale, che dimostra l'impossibilità della soluzione
+    - intuitivamente, le soluzioni del problema duale sono illimitate dato che il primale risulta impossibile
+    - se il duale si stacca da zero allora deve per forza deve andare a +inf (altri valori finiti dovrebbero essere uguali nel primale)
 
 
-### Complementary slackness/condizioni di ortogonalità
-fino ad ora sappiamo solo che primale e duale hanno lo stesso valore della soluzione. Ma come faccio a trovare la soluzione del duale (che da quel valore)?
-lo strumento ce lo da il seguente teorema
+
+
+
+### Complementary slackness (condizioni di ortogonalità)
+Fino ad ora sappiamo solo che primale e duale hanno lo stesso valore della soluzione.
+- Come faccio a trovare la soluzione del duale data quella del primale/valore?
+- lo strumento ce lo da il seguente teorema
+
+![alt text](immagini/slackness.png)
 
 - prodotto tra variabile duale e scarto primale deve valore zero
 - viceversa
 
-questo teorema mi da uno strumento potente dato che che se ... (uno dei due termini deve fare zero il che mi porta a delle conclusioni nella soluzione ottima)
+Complementary slackness implies that:
+- ∀j : π′Aj < cj in the optimal solution to the dual, **we must have xj = 0 in the optimal solution to the primal**, and conversely
+- ∀j : xj > 0 in the optimal solution to the primal, we must have π′Aj = cj in the optimal solution to the dual.
+- Similar relationships between primal constraints and dual variables.
 
-
-**conclusione**: Le condizioni di ortogonoalità ci forniscono la soluzione di un problema data la soluzione del suo duale
+**conclusione**: Le condizioni di ortogonoalità ci **forniscono la soluzione di un problema** (primale o duale) data la soluzione del suo duale!
 
 
 
 ### Tableau e informazioni sulla dualità
 ...
 
-- cj = cj - pi*Aj ma gli Aj sono quelli di una matrice identità
-- se moltiplico i due tableua per l'inversa della base ottima ...
+- cj' = cj - pi*Aj ma gli Aj sono quelli di una matrice identità
+    - recupero i pi_j
+- in row 0, **in the columns corresponding to the initial basis**, we have cj = cj − πj, **from which we get the optimal dual solution** πj = cj − cj.
+- **NB**: If the initial basis is provided by the artificial variables of Phase 1 (cost cj = 0), then πj = −cj.
 
+**Altra OSS**: In the final tableau the columns of the initial base contain the inverse of the optimal base.
+- per trovare i valori della soluzione del duale basta controllare i valori dei costi relativi delle colonne fuori base del **tableau finale**, e fare l'operazione descritta sopra
 ...
 
 **conclusione**: il confronto tra il tableau iniziale e il tableua nella sua forma che trova la soluzione ottima mi permette di recuperare la soluzione ottima del problema duale!
@@ -156,10 +173,29 @@ questo teorema mi da uno strumento potente dato che che se ... (uno dei due term
 ## Algoritmo del simplesso duale
 chiave per risolvere i problemi di PL intera
 
-idea: partiamo da una soluzione duale che è più che ottima per il primale ma che non soddisfa i suoi vincoli. Poi cerchiamo di spostarla nella direzione dell'ammissibilità
+**Idea**: partiamo da una soluzione duale che è più che ottima per il primale, ma che non soddisfa i suoi vincoli. Poi cerchiamo di spostarla nella direzione dell'ammissibilità.
 
-Capisci come si scelgono i pivot
-- l'unica differenza è che prendiamo dei pivot negativi
+Questo si traduce in:
+
+1. partire da una base **ammissibile per il duale** (prima riga con y_0j >= 0 per ogni j) ma **non ammissibile per il primale** (prima colonna con almeno un yi0 < 0)
+    - soluzione duale che non soddisfa i vincoli del primale che cerchiamo di spostare
+2. facciamo una operazione di **pivoting su una riga** (una con yi0 < 0)
+    - il pivoting deve rendere positivo yi0 -> spostare la soluzione nella direzione dell'ammissibilità per il primale
+    - stiamo lavorando con il duale su un tableau primale e quindi tutto è un pò girato
+3. scegliamo un pivot nella riga in considerazione tra gli yij < 0 (prendiamo dei pivot negativi)
+    - il pivot si sceglie come **max{y_0j / y_ij}** con j tale che yij **<** 0 
+    - questa scelta garantisce il minimo incremento di costo e quindi ci fa stare sereni dato che evita di esagerare e di arrivare ad una soluzione ammissibile per il primale ma non ottima
+    - **NB**: se tutti gli yij sono > 0, allora la soluzione per il primale **non esiste** (e il duale è illimitato)
+
+
+
+
+**NB**: No “two-phase” method is needed, the dual simplex algorithm is normally used when:
+- we are given the optimal tableau of a primal LP; 
+- **one or more constraints are added so the solution becomes infeasible;**
+- we want the new optimal solution without starting from scratch
+
+
 
 
 
