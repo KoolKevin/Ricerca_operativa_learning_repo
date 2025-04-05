@@ -176,7 +176,7 @@ Similar relationships between primal constraints and dual variables.
     - recupero i π_j
 - in row 0, **in the columns corresponding to the initial basis**, we have cj = cj − πj, from which we get the optimal dual solution:
 
-```le componenti della soluzione duale valgono πj = cj − cj' in corrispondenza delle colonne appartenti alla base iniziale (questa è praticamente l'unica cosa da sapere)```
+```le componenti della soluzione duale valgono πj = cj − cj' in corrispondenza delle colonne del tableau finale appartenti alla base iniziale (questa è praticamente l'unica cosa da sapere)```
 
 - **NB**: If the initial basis is provided by the artificial variables of Phase 1 (cost cj = 0), then πj = −cj.
 
