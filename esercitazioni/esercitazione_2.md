@@ -12,9 +12,9 @@ un vincolo relativo alla variabili x_i si traduce in pi_i
 - se modifico il secondo termine noto -> modifico il secondo vincolo -> vado a guardare la seconda variabile duale
 
 
-esercizio 4:
+### esercizio 4:
 - non c'è da fare nessuna conversione, ogni tonnellata ... contiene un quintale 
-    - se fossero stati due quintali -> 2*x1 ...
+    - **NB**: se fossero stati due quintali -> 2*x1 ...
 
 consiglio spassionato per l'esame: disegnare sempre il problema dopo aver definito il modello LP
 

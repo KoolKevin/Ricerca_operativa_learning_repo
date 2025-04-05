@@ -154,13 +154,17 @@ Similar relationships between primal constraints and dual variables.
 
 
 ### Tableau e informazioni sulla dualità
+![alt text](immagini/tableau_iniziale_e_finale.png)
+
+- nel tableau finale, in corrispondenza delle colonne che formano la base nel tableau iniziale, si trova l'inversa delle colonne appartenenti alla base finale nel tableau iniziale
+- tableau finale, base iniziale == inversa di tableau iniziale base finale 
 ...
 
 - cj' = cj -π′*Aj ma gli Aj sono quelli di una matrice identità
     - recupero i π_j
 - in row 0, **in the columns corresponding to the initial basis**, we have cj = cj − πj, from which we get the optimal dual solution:
 
-```πj = cj − cj'; questa è praticamente l'unica cosa da sapere```
+```le componenti della soluzione duale valgono πj = cj − cj' in corrispondenza delle colonne appartenti alla base iniziale (questa è praticamente l'unica cosa da sapere)```
 
 - **NB**: If the initial basis is provided by the artificial variables of Phase 1 (cost cj = 0), then πj = −cj.
 
@@ -252,6 +256,7 @@ La dualità offre una tecnica immediata per determinare i prezzi ombra:
 - Remind: The objective function of the dual is __π′*b__; primal and dual optimal solutions have the same value.
 - the objective function coefficient for πi is bi (the right-end side of primal constraint i). Hence
 - **Property**: the optimal value of dual variable πi is the shadow price for primal constraint i
+    - ricorda: la i-esima variabili duale è associata all'i-esimo vincolo primale
     - siccome soluzione ottima primale e duale hanno lo stesso valore, l'incremento unitario di bi mi fa aumentare il valore della soluzione duale (e quindi anche del primale) di πi.
     - ma questa è proprio la definizione di shadow price 
 
