@@ -20,4 +20,10 @@ consiglio spassionato per l'esame: disegnare sempre il problema dopo aver defini
 
 rette isoprofitto
 
+
+**ottenimento di una base iniziale**
+nel metodo delle due fasi:
+- in fase 1 i termini noti b devono essere >= 0 (eventualmente moltiplica per -1)
+- se neanche così hai una base iniziale, allora c'è da introdurre delle variabili artificiali
+
 consiglio spassionato 2: fare con cautela i calcoli relativi alle operazioni di pivoting, altrimenti sbagli tutto

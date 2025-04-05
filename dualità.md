@@ -72,6 +72,18 @@ per risolvere un problema PL noi abbiamo solo il simplesso come tecnica e quindi
 
 
 
+### Regole pratiche per costruire il duale:
+![alt text](immagini/relazioni_primale-duale.png)
+
+- se sei in forma standard, basta considerare la **prima e terza relazione**
+
+
+
+
+
+
+
+
 
 ## Dualità forte e dualità debole
 che relazione c'è tra problema duale e primale?
