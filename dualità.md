@@ -11,8 +11,9 @@ una rappresentazione diversa di un qualcosa che ci da delle informazioni non evi
 
 ### Interpretazione algebrica dell'algoritmo del simplesso
 Differenza tra: 
-- base B        == m colonne linearmente indipendenti della matrice A
-- e tableau Y   == la matrice A a cui sono state applicate le operazioni elementari di riga per avere I in corrispondenza della base 
+- tableau iniziale A == ha solo con m colonne linearmente indipendenti che formano la base B 
+    - ha una base iniziale non ottima (spoiler per dopo)
+- e tableau finale Y == la matrice A a cui sono state applicate le operazioni elementari di riga per avere I in corrispondenza della base 
 
 Il tableau si ottiene non solo tramite operazioni elementari di riga ma anche come: Y = B^-1 * A
 - le colonne di A corrispondenti alla base si trasformano nella matrice identità
@@ -24,7 +25,7 @@ Il vettore dei costo (NON relativi) si ottiene come: z' = c'_beta * B^-1 * A (co
 
 **La dualità di un PL emerge dal criterio di ottimalità**:
 - per la BFS ottima, il termine c'_b*B^-1 è l'unica incognita (dipende da quel'è la base ottima)
-- il resto è un dato del problema
+- il resto è un dato in input del problema
 - possiamo allora chiamare c'_b*B^-1 -> **pi'**
 
 abbiamo che pi' per definizione è una soluzione ammissibile al seguente nuovo problema che già puzza di duale:
@@ -143,7 +144,10 @@ Fino ad ora sappiamo solo che primale e duale hanno lo stesso valore della soluz
 Complementary slackness implies that:
 - ∀j : π′Aj < cj in the optimal solution to the dual, **we must have xj = 0 in the optimal solution to the primal**, and conversely
 - ∀j : xj > 0 in the optimal solution to the primal, we must have π′Aj = cj in the optimal solution to the dual.
-- Similar relationships between primal constraints and dual variables.
+
+Similar relationships between primal constraints and dual variables.
+- ∀i : πi </=/> 0 in the optimal solution to the dual, **we must have ai*x=bi in the optimal solution to the primal**, and conversely
+- ∀i : ai*x > bi in the optimal solution to the primal, we must have πi = 0 in the optimal solution to the dual.
 
 **conclusione**: Le condizioni di ortogonoalità ci **forniscono la soluzione di un problema** (primale o duale) data la soluzione del suo duale!
 
@@ -152,17 +156,19 @@ Complementary slackness implies that:
 ### Tableau e informazioni sulla dualità
 ...
 
-- cj' = cj - pi*Aj ma gli Aj sono quelli di una matrice identità
-    - recupero i pi_j
-- in row 0, **in the columns corresponding to the initial basis**, we have cj = cj − πj, **from which we get the optimal dual solution** πj = cj − cj.
+- cj' = cj -π′*Aj ma gli Aj sono quelli di una matrice identità
+    - recupero i π_j
+- in row 0, **in the columns corresponding to the initial basis**, we have cj = cj − πj, from which we get the optimal dual solution:
+
+```πj = cj − cj'; questa è praticamente l'unica cosa da sapere```
+
 - **NB**: If the initial basis is provided by the artificial variables of Phase 1 (cost cj = 0), then πj = −cj.
 
 **Altra OSS**: In the final tableau the columns of the initial base contain the inverse of the optimal base.
-- per trovare i valori della soluzione del duale basta controllare i valori dei costi relativi delle colonne fuori base del **tableau finale**, e fare l'operazione descritta sopra
-...
 
-**conclusione**: il confronto tra il tableau iniziale e il tableua nella sua forma che trova la soluzione ottima mi permette di recuperare la soluzione ottima del problema duale!
-- è per questo che non possiamo scartare le variabili artificiali, mi servono per il duale
+**conclusione** per trovare i valori della soluzione del duale basta controllare i valori dei costi relativi delle colonne fuori base del **tableau finale**, e fare l'operazione descritta sopra
+- il confronto tra il tableau iniziale e il tableau finale mi permette di recuperare la soluzione ottima del problema duale!
+- **è per questo che non possiamo scartare le variabili artificiali, mi servono per il duale**
 
 
 
@@ -232,13 +238,14 @@ Andiamo a vedere cosa succede se cambio una valore di _b_ o un costo _c_.
 ### Prezzi ombra
 considera il seguente problema: dato un vettore di termini noti b relativo ai vincoli di un problema di produzione (PL), e una determinata funzione di profitto, con il simplesso noi siamo in grado di trovare la soluzione ottima, ovvero quella che da il profitto maggiore. Spesso però il vettore b dei limiti non è un fissato rigidamente ma è flessibile, ci si potrebbe allora chiedere se potrebbe convenire modificare un certo limite b_i (ad esempio produrre di più/meno) considerando sia il costo della modifica che la soluzione ottima corrente.
 
-**Definition**: the shadow price for resource i is the increase of the objective function value the could be obtained by increasing the available amount bi of the resource **di un unità(a quanto pare)**, **provided the new value lies inside the confidence interval of the sensitivity analysis**.
+**Definition**: the shadow price for resource i is the increase of the objective function value that could be obtained by increasing the available amount bi of the resource **di un unità(a quanto pare)**, **provided the new value lies inside the confidence interval of the sensitivity analysis**.
 - Why do we use the term “price” for a profit increase?
 - When a shadow price is positive, the cost of the resource increase must be considered. 
 - For example, suppose the shadow price for resource i is 3:
     - if the unit cost for increasing the resource is lower than 3 then increasing it would be convenient, otherwise it would not.
 - **Shadow price = maximum price we are willing to pay for each additional unit of a resource.**
 
+Nota: i prezzi d'ombra sono definito solo con analisi di sensitività dei termini noti e non dei costi
 
 ### Prezzi ombra e dualità
 La dualità offre una tecnica immediata per determinare i prezzi ombra:
@@ -247,11 +254,6 @@ La dualità offre una tecnica immediata per determinare i prezzi ombra:
 - **Property**: the optimal value of dual variable πi is the shadow price for primal constraint i
     - siccome soluzione ottima primale e duale hanno lo stesso valore, l'incremento unitario di bi mi fa aumentare il valore della soluzione duale (e quindi anche del primale) di πi.
     - ma questa è proprio la definizione di shadow price 
-
-
-
-prezzi ombra e funzione obiettivo del problema duale (che mi darà lo stesso valore della funzione obiettivo del primale)
-
 
 
 
