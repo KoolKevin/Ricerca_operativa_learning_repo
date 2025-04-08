@@ -92,3 +92,77 @@ ricorda che il valore della soluzione del problema rilassato i (Li) è per forza
 
 **branch & bound nel tableau**
 guarda le slide che fai prima
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Strategie di esplorazione in branch & bound
+
+...
+
+
+**lowest bound first**
+...
+
+interessante la difficoltà implementativa dell'algoritmo, che durante il backtracking ha necessità di eliminare svariati vincoli durante la risalita
+
+
+...
+
+
+**bfs**
+...
+
+usata raramente, ma occasionalmente utile se si ha bisogno di conoscere tutte le soluzioni ottime e magari anche alcune non ottime leggermente peggiori (magari costano molto meno considerando altre condizioni)
+
+
+
+
+
+
+### MILP
+con l'algoritmo branch and bound siamo già a posto
+- mi basta scegliere per il branching solamente le variabili che devono assumere valori interi
+
+con i tagli di gomory un po più difficile
+- la formula di gomory per i tagli rischia di tagliare via pezzi di politopo che contengono i valori ottimi per le variabili frazionarie
+- non è difficile modificare i tagli
+
+se mischiamo con tagli di gomory modificati con branch and bound (**branch and cut**) ottieniamo lo stato dell'arte non solo per MILP ma anche per ILP
+
+
+
+
+
+### Binary integer linear programming
+
+
+**knapsack problem (zaino)**
+scegliere quali oggetti (variabili) mettere nello zaino
+
+
+
+
+**regole di branching**
+
+
+
+
+**regole di bounding**
+non c'è bisogno del simplesso, basta usare una frazione quando ho quasi riempito lo zaino
+-> upper bound di Dantzig
+
+oss: anche la strategia di branching segue la stessa logica, continua a mettere fino a che non trova l'elemento critico
