@@ -110,21 +110,43 @@ guarda le slide che fai prima
 
 
 ## Strategie di esplorazione in branch & bound
+Two main issues for designing a branch-and-bound algorithm:
+- **explorations strategy** (which node has to be explored next);
+- how to compute bounds (will be seen later).
 
-...
 
 
-**lowest bound first**
-...
+**DFS**
+- forward step: 
+    - parti calcolando L(P_0), genera il suo primo figlio P_1 e calcola L(P_1)
+    - continua in profondità generando e calcolando un figlio di P_1, P_2 e cosi via, fino a quando, 
+        - P_n restituisce una soluzione intera, allora aggiorna z se quest'ultima è migliore
+    - oppure
+        - il nodo corrente non da più speranza di trovare una soluzione migliore L(P_n) >= z
+        - oppure il nodo corrente non ha più figli non esplorati
+        - in questi casi 
+- backtracking:
+    - ritorna a P_p padre di P_n, e genera il prossimo figlio se L(P_p) < z (c'è ancora speranza di trovare una soluzione migliore)
+    - altrimenti, ma anche se ho già esplorato tutti i figli di P_p, di nuovo backtracking al padre di P_p
+    - termina quando si tenta un backtracking da P_0
+        
+
+**Lowest Bound First**
+- mantiene un insieme dei nodi attivi (frontiera)
+- ad ogni iterazione sceglie il nodo più promettente (lowest bound) e lo esplora generando tutti i suoi figli ed aggiundo quest'ultimi al set
 
 interessante la difficoltà implementativa dell'algoritmo, che durante il backtracking ha necessità di eliminare svariati vincoli durante la risalita
 
 
-...
+**dfs revisited**
+variante della DFS sopra in cui si combina un po' di Lowest bound first.
+- ad ogni passo di esplorazione non generiamo un solo figli ma tutti, e si continua con il figlio con il lowest bound
+- durante il backtracking, l'esplorazione continua facendo un solo passo indietro alla volta
+    - scelgo tra i nodi fratelli rimanenti qullo con il lowest bound
 
 
 **bfs**
-...
+si genera tutto di tutti
 
 usata raramente, ma occasionalmente utile se si ha bisogno di conoscere tutte le soluzioni ottime e magari anche alcune non ottime leggermente peggiori (magari costano molto meno considerando altre condizioni)
 
@@ -134,21 +156,25 @@ usata raramente, ma occasionalmente utile se si ha bisogno di conoscere tutte le
 
 
 ### MILP
+In a general case:
+- a subset of variables can only take integer values;
+- the other variables can take fractional values.
+
 con l'algoritmo branch and bound siamo già a posto
 - mi basta scegliere per il branching solamente le variabili che devono assumere valori interi
 
-con i tagli di gomory un po più difficile
-- la formula di gomory per i tagli rischia di tagliare via pezzi di politopo che contengono i valori ottimi per le variabili frazionarie
-- non è difficile modificare i tagli
+con i tagli di Gomory un po più difficile
+- la formula di Gomory per i tagli rischia di tagliare via pezzi di politopo che contengono i valori ottimi per le variabili frazionarie
+- non è difficile modificare i tagli per farli funzionare anche in questo caso 
 
-se mischiamo con tagli di gomory modificati con branch and bound (**branch and cut**) ottieniamo lo stato dell'arte non solo per MILP ma anche per ILP
+**NOTA**: se mischiamo tagli di Gomory modificati con branch and bound (**branch and cut**) ottieniamo lo stato dell'arte non solo per MILP ma anche per ILP
 
 
 
 
 
 ### Binary integer linear programming
-
+Caso speciale di ILP
 
 **knapsack problem (zaino)**
 scegliere quali oggetti (variabili) mettere nello zaino
