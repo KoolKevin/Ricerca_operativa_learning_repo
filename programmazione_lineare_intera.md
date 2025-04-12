@@ -180,10 +180,8 @@ Caso speciale di ILP
 scegliere quali oggetti (variabili) mettere nello zaino
 
 
-
-
 **regole di branching**
-
+in pratica è una DFS rivisitata
 
 
 
