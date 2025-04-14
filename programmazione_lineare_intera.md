@@ -167,7 +167,8 @@ con i tagli di Gomory un po più difficile
 - la formula di Gomory per i tagli rischia di tagliare via pezzi di politopo che contengono i valori ottimi per le variabili frazionarie
 - non è difficile modificare i tagli per farli funzionare anche in questo caso 
 
-**NOTA**: se mischiamo tagli di Gomory modificati con branch and bound (**branch and cut**) ottieniamo lo stato dell'arte non solo per MILP ma anche per ILP
+**NOTA**: se mischiamo tagli di Gomory modificati con branch and bound (**branch and cut**) ottieniamo lo stato dell'arte non solo per MILP ma **anche per ILP**
+- interessante notare come i tagli di gomory modificati siano efficaci anche per problemi ILP in cui i tagli normali andrebbero bene comunque
 
 
 
@@ -190,3 +191,13 @@ non c'è bisogno del simplesso, basta usare una frazione quando ho quasi riempit
 -> upper bound di Dantzig
 
 oss: anche la strategia di branching segue la stessa logica, continua a mettere fino a che non trova l'elemento critico
+
+
+
+**Come faccio a calcolare un bound migliore di quello di Dantzig?**
+ovvero più stretto
+
+consideriamo due casi, 
+- uno in cui c'è l'elemento critico 
+- ed uno in cui c'è (e quindi in cui andrà tolto qulcosa)
+
