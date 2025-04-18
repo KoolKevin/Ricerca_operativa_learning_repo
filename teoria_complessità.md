@@ -1,9 +1,16 @@
 ### Definizioni:
-
-dimensione di un'istanza: il numero di **BIT** ... 
-- normalmente però numero di valori
-- a quanto pare importante questa distinzioni
-
+- **Instance of a problem P** 
+    - specific **input** for a numeric case of the problem; (Problem P = (infinite) set of all its instances.)
+- **Complexity of an algorithm**
+    - measure of the **time** it takes to solve the worst case instance of P; 
+- **complexity of a problem P**
+    - complexity of the best algorithm for P. 
+- **Time**:
+    - number of elementary steps, or number of milliseconds on a specific computer, or ... 
+    - **Time as a function of the instance size**. 
+- **Size of an instance**
+    - number of **bits** needed to encode the input 
+    - frequently (but not always!) equivalent to the number of values in the input.
 
 ...
 

@@ -94,27 +94,15 @@ ricorda che il valore della soluzione del problema rilassato i (Li) è per forza
 guarda le slide che fai prima
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Two main issues for designing a branch-and-bound algorithm:
+- explorations strategy (which node has to be explored next) 
+- how to compute (tight) bounds (vedi tra un po') 
 
 
 ## Strategie di esplorazione in branch & bound
 Two main issues for designing a branch-and-bound algorithm:
 - **explorations strategy** (which node has to be explored next);
 - how to compute bounds (will be seen later).
-
-
 
 **DFS**
 - forward step: 
@@ -153,6 +141,16 @@ usata raramente, ma occasionalmente utile se si ha bisogno di conoscere tutte le
 
 
 
+**Come faccio a calcolare un bound migliore di quello di Dantzig?**
+ovvero più stretto
+
+consideriamo due casi, 
+- uno in cui c'è l'elemento critico 
+- ed uno in cui c'è (e quindi in cui andrà tolto qulcosa)
+
+
+
+
 
 
 ### MILP
@@ -175,14 +173,20 @@ con i tagli di Gomory un po più difficile
 
 
 ### Binary integer linear programming
-Caso speciale di ILP
+Caso speciale di ILP in cui tutte le variabili decisionali possono valere {0, 1}
+- caso più semplice (ma comunque NP-completo) se poi la matrice dei vincoli A è formata da una sola riga (vettore dei pesi delle variabili)
 
-**knapsack problem (zaino)**
+**knapsack problem (zaino) KP01**
 scegliere quali oggetti (variabili) mettere nello zaino
 
 
-**regole di branching**
-in pratica è una DFS rivisitata
+**regole di esplorazione/branching**
+- Al primo livello, primo branching (x1 = 1 v x1 = 0). Alle iterazioni successive
+- se esiste un nodo attivo generato da uno scelta positiva (xj = 1), che rispetta i vincoli (ci sta dentro allo zaino), allora branching da li. 
+- altrimenti, branching dall'ultimo xj = 0
+
+- nodo attivo == nodo appartenente alla frontiera
+- in pratica è una **DFS rivisitata**
 
 
 
@@ -192,12 +196,8 @@ non c'è bisogno del simplesso, basta usare una frazione quando ho quasi riempit
 
 oss: anche la strategia di branching segue la stessa logica, continua a mettere fino a che non trova l'elemento critico
 
-
-
-**Come faccio a calcolare un bound migliore di quello di Dantzig?**
-ovvero più stretto
-
-consideriamo due casi, 
-- uno in cui c'è l'elemento critico 
-- ed uno in cui c'è (e quindi in cui andrà tolto qulcosa)
-
+How many time (steps, iterations ...) requires the branch-and-bound algorithm for KP01?
+- If we are lucky, the first (leftmost) n branches will find the optimal solution, and the bounds will kill all other nodes:
+    - the algorithm will take a time proportional to n.
+- If we are unlucky, the bounds will kill no node: 
+    - time proportional to 2^n .
