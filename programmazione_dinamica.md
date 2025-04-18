@@ -42,6 +42,35 @@ def: ...
 
 intuizione: ma allora posso trasformare i problemi NP in subset-sum che è np-completo e pseudopolinomiale, e risolvere questi problemi NP con questa complessità pseudopolinomiale? NO! -> ulteriore differenziazione
 
+
+
+
+**Esempio concreto**
+Considera due istanze di KP01:
+
+Caso 1: 
+- c=1024
+    - Bit necessari: log 1024=10 bit.
+    - Tempo DP: O(n⋅1024).
+
+Caso 2: 
+- c=1.048.576 (cioè 2^20)
+    - Bit necessari: 20 bit (solo il doppio del Caso 1).
+    - Tempo DP: O(n⋅1.048.576)
+
+Nota che:
+- La dimensione in bit è passata da 10 a 20 (2x)
+- Il tempo è passato da 1024 a 1.048.576 (2^10 = 1024x).
+- Questo dimostra che il tempo cresce esponenzialmente rispetto alla dimensione in bit dell'input, anche se è lineare in c.
+- Un algoritmo veramente polinomiale avrebbe tempo limitato da un polinomio **nella dimensione in bit**
+    - es. O(n^2⋅log c)
+    - O(n*c) invece è esponenziale nella dimensione in bit log c (== O(n*2^log c)) 
+
+
+
+
+
+
 ### Problemi Fortemente NP-completi
 ... 
 
