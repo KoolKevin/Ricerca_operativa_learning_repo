@@ -14,10 +14,9 @@
 
 ...
 
-
-For most optimization problems no polynomial-time algorithm is known.
+For most optimization problems no polynomial-time algorithm is known (ma non significa che non esista).
 - It is widely **conjectured** that such algorithm cannot exist.
-- congettura molto valida dato che se riuscissimo a trovare anche solo una soluzione polinomiale ad uno qualsiasi delle decine di migliaia di problemi di ottimizzazione esponenziali (la maggior parte), allora è dimostrato che automaticamente tutti potrebbero essere risolti polinominalmiente 
+- congettura molto valida dato che se riuscissimo a trovare anche solo una soluzione polinomiale ad uno qualsiasi delle decine di migliaia di problemi di ottimizzazione con complessità esponenziale (la maggior parte), allora è dimostrato che automaticamente tutti potrebbero essere risolti polinominalmiente 
 - invece, non se ne è ancora riuscito a trovare nessuno tra tutte queste migliaia in 70+ anni
 
 **Complexity theory provides a rigorous treatment of these issues.**
@@ -34,38 +33,83 @@ Complexity theory, which has been developed for problems in RV (dato che sono pi
 
 
 ## Classi P e NP
+- P = class of all problems in RV for which ∃ a Polinomial-time algorithm
+    - (equivalently, problems that are solvable in polynomial time by a deterministic Turing machine).
+- NP = class of all problems in RV such that **if the solution is “yes”** then **it can be certified in polynomial time**   -  
+    - (equivalently, problems solvable in polynomial time by a non-deterministic Turing machine),
+    - (equivalently, problems solvable through a branch-decision tree of polynomial height).
+
+**NB**: If a problem is in NP, the existence of a polynomial-time algorithm **cannot be ruled out**.
+
 i problemi di classe P sono quelli risolubili in tempo polinomiale
 - risolivbili da una MdT deterministica
 
 la classe NP **non sta per non-polinomiale**
-- problemi in forma RV per cui **se la risposta è si** può essere certificata in tempo polinomiale (da una MdT non det.) 
-    - la risposta no la lasciamo stare più difficile (ricorda decidibilità)
+- problemi in forma RV per cui **se la risposta è si** può essere certificata in tempo polinomiale  (da un algoritmo deterministico)
+    - la risposta no la lasciamo stare più difficile (mi ricorda decidibilità)
+
+**NB**: la maggioranza dei problemi di ottimizzazione combinatoria ricade in NP 
 
 
-MdT deterministica vs non det
+
+
+**MdT det vs non det**
 - una MdT det. dopo ogni operazione ha una singola operazione che può eseguire
 - non det. ha più istruzioni possibili dopo ogni istruzione eseguita, inoltre ha un oracolo che suggerisce l'istruzione che porta alla soluzione ottima
     - oracolo mi dice sempre la mossa giusta (caso migliore)
 
-Quand'è che un problema non appartiene neanche ad NP?
+
+
+**Quand'è che un problema non appartiene neanche ad NP?**
 - quando anche con l'oracolo, non ottengo la certificazione in tempo polinomiale
+- crazy problema
 
-A noi interessano problemi della classe NP
+**A noi interessano problemi della classe NP**
 - per questi problemi non si può escludere una soluzione polinomiale, e quindi siamo motivati a cercarla
-- se siamo intelligenti possiamo ottenere un pseudo-oracolo che ci salva dalla esponenzialità del problema
+    - albero decisionale con altezza polinomiale
+    - potrebbe esistere un algoritmo intelligente con cui possiamo simulare oracolo che ci salva dalla esponenzialità del problema
 
-...
+**Complessità superpolinomiale**:
+- Per i problemi in NP, non è noto se esista un algoritmo deterministico polinomiale per trovare la soluzione 
+    - (cioè, non sappiamo se P=NP, se ne trovo uno lo trovo per tutti... vedi dopo).
+- Attualmente, gli algoritmi noti per molti problemi NP hanno complessità esponenziale.
 
-albero decisionale con altezza polinomiale
+**Relazione tra P e NP**:
+- chiaramente P⊆NP
+- Tutti i problemi risolvibili in tempo polinomiale deterministicamente possono anche essere certificati in tempo polinomiale (produco direttamente la risposta corretta).
+
+La domanda aperta è se P=NP.
+- Se fosse vero, significherebbe che i problemi in NP possono essere risolti efficientemente anche senza "indovinare" con un oracolo la soluzione.
+
+
+
+
+**In sintesi** 
+- NP non implica che gli unici algoritmi noti siano superpolinomiali, ma che al momento non conosciamo algoritmi deterministici polinomiali per i problemi in NP.
+- La definizione si concentra sulla verificabilità polinomiale delle soluzioni, non sulla loro generazione.
+
+
+
 
 ### Trasformazioni polinomiali
+Un problema A appartenente ad NP si dice trasformabile in tempo polinomiale in un altro problema B appartenente ad NP se esiste un algoritmo polinomiale che, per ogni istanza (input specifico del problema) di A è in grado di definire un'istanza di B che ha come risposta "si" se e solo se l'istanza di A di partenza aveva soluzione "si"
+- non è detto che il mapping sia uno ad uno: possono esistere istanza di B che hanno risposta si a cui non corrispondono istanze di A. 
 
+In pratica si sta dicendo che ogni istanza di A si può trasformare in una istanza di un più generale problema B in tempo polinomiale. Risolvendo il l'istanza di B si risolve anche listanza di A 
+- A è una sorta di caso particolare del problema B
 
+**NB**: Se esiste un algoritmo polinomiale per risolvere B allora automaticamente ne esiste uno anche per A (prima si trasforma A e poi si applica l'algoritmo di B)
 
 
 ### problemi NP-completi
-...
+Un problema A appartenente ad NP, si dice NP completo se:
+- per ogni B appartenente ad NP
+- B è trasformabile in tempo polinomiale in A
 
+Insomma, A è NP completo se ogni altro problema NP si può ridurre a lui in tempo polinomiale.
+- A è il problema NP più generale possibile
+- **NB**: se esiste un algoritmo polinomiale per A allora ne esiste uno polinomiale per tutti i problemi in NP!
+    
 **è un problema potentissimo**
 - posso trasformare qualunque altro problema della classe NP in tempo polinomiale
     - qualunque altro problema si riduce a lui
@@ -75,76 +119,32 @@ albero decisionale con altezza polinomiale
 
 
 
-...
+**Incredibile**: si è scoperto che quasi tutti i problemi di ottimizzazione per cui non si possiede un algoritmo polinomiale sono np-completi
+
+**Problemi aperti**: alcuni problemi non si sa se sono NP-completi oppure solo NP:
+- appartengono ad NP
+- ma non si è riuscito a dimostrare la NP completezza 
 
 
+**esempi di problemi NP-completi**:
+- KP01 (in forma RV)
+- e quindi (sicco KP01 è un caso speciale, non c'è neanche bisogno di trasformare) anche i seguenti sono NP-completi
+    - 0-1LP 
+    - ILP
+    - MILP
 
-incredibile: si è scoperto che quasi tutti i problemi per cui non si possiede un algoritmo polinomiale sono np-completi
+La programmazione lineare generale non è NP-completa (appartiene a P, vedi dopo)
 
+**Ripetiamo**:
+A polynomial-time algorithm for a single (any!) NP-complete problem would produce a polynomial-time algorithm for all NP problems, i.e., it would prove that P = NP. However, in the last 60 years nobody has been able to find such an algorithm, hence most mathematicians and computer scientists believe that its existence is unlikely.
 
+On the other hand, formally proving that P ̸= N P is considered by many to be impossible with the current mathematical knowledge.
 
-...
-
-Knapsack 0-1 è un problema NP-completo, e quindi ... ILP, MILP e roba sono NP-C
-
-
-La versione ottimizzazione di un problema NP-C viene detta NP-Hard (differenza più linguistica che altro)
-
-
-...
+nota: La versione ottimizzazione di un problema NP-C viene detta NP-Hard (differenza più linguistica che altro
 
 
 
 ### Complessità della programmazione lineare
+il simplesso ha complessità m*log(n) nella maggior parte delle istanza ma 2^n per caso peggiore e quindi non rende LP appartenente a P
 
-m*log(n) e 2^n
-
-
-PL è polinomiale 
-
-
-
-
-
-
-
-
-## Programmazione dinamica
-
-problema: caso particolare di knapsack 0-1 in cui il profitto di ogni oggetto è pari al suo peso
-
-...
-
-algoritmo DP per knapsack 01
-- complessità polinomiale n*c???
-- ma branch and bound richiede per 2^n
-- ma in realtà non è polinomiale
-- ricorda: la grandezza di un'istanza è il numero di bit necessari a codificare un input
-
-**Algoritmi pseudo polinomiali**
-
-**NB**: interessante notare che la complessità dipende dalla **dimensione** delle entità in gioco
-- due problemi con la stessa dimensione dell'input in ingresso ma uno con capacità 10 e l'altro 10^6 hanno tempi drammaticamente diversi
-- questo non vale per branch and bound che ci mette sempre 2^n
-
-
-
-
-intuizione: ma allora posso trasformare i problemi NP in subset-sum che è np-completo e pseudopolinomiale e risolvere questi problemi in con questa complessità? NO! -> ulteriore differenziazione
-
-### Problemi Fortemente NP-completi
-sono quelli che non ammettono pseudopolinominalità (non conviene programmazione dinamica)
-
-restrizioni:
-...
-
-se considero c <= n -> cn = n^2!
-
-
-
-
-**conclusioni su DP**:
-- tecnica generale che produce algoritmi efficienti per problemi che hanno numeri piccoli
-- per i problemi fortemente np-c gli algoritmi dp sono esponenziali, per i problemi NON fortemente np-c sono pseudo-polinomiali
-...
-- approcci di DP non sempre conveniente a causa della molta memoria richiesta e molti accessi alla memoria
+Tuttavia, per la programmazione lineare è stato scoperto un algoritmo polinomiale e quindi è dimostrato che appartiene a P 

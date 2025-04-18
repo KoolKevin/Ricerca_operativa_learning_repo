@@ -172,7 +172,7 @@ con i tagli di Gomory un po più difficile
 
 
 
-### Binary integer linear programming
+### Binary integer linear programming (0-1 LP)
 Caso speciale di ILP in cui tutte le variabili decisionali possono valere {0, 1}
 - caso più semplice (ma comunque NP-completo) se poi la matrice dei vincoli A è formata da una sola riga (vettore dei pesi delle variabili)
 
