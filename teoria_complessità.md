@@ -39,6 +39,8 @@ Complexity theory, which has been developed for problems in RV (dato che sono pi
     - (equivalently, problems solvable in polynomial time by a non-deterministic Turing machine),
     - (equivalently, problems solvable through a branch-decision tree of polynomial height).
 
+Una soluzione di un problema in NP è **facile da verificare** ma è **difficile da trovare**
+
 **NB**: If a problem is in NP, the existence of a polynomial-time algorithm **cannot be ruled out**.
 
 i problemi di classe P sono quelli risolubili in tempo polinomiale
@@ -148,3 +150,43 @@ nota: La versione ottimizzazione di un problema NP-C viene detta NP-Hard (differ
 il simplesso ha complessità m*log(n) nella maggior parte delle istanza ma 2^n per caso peggiore e quindi non rende LP appartenente a P
 
 Tuttavia, per la programmazione lineare è stato scoperto un algoritmo polinomiale e quindi è dimostrato che appartiene a P 
+
+
+
+
+
+
+
+
+### Algoritmi pseudopolinomiali
+( definizione presa da un video )
+- algoritmi che hanno complessità polinomiale nel valore dei loro input 
+- ma complessità esponenziale nella dimensione (in bit) dei loro input
+
+Tipicamente questo situazione accada quando l'input di un algoritmo contiene un intero che non è limitato dalla dimensione di un altro input 
+- vedi c che non è limitato da n in KP01
+    - se lo fosse KP01 sarebbe O(n^2)
+
+...
+
+La dimensione di array di input cresce linearmente con la loro cardinalità
+- quindi dimensione in bit è cardinalità possono essere scambiate nel considerare la dimensione dell'input
+
+La dimensione di di interi invece come c cresce logaritmicamente con il valore
+
+
+... 
+
+
+### Problemi fortemente NP-completi
+abbiamo visto che per valori "piccoli" dei dati di ingresso (ad esempio con c limitato da un polinomio in n -> c è O(n^k)) allora 
+la complessità di un problema pseudopolinomiale potrebbe ridursi a polinomiale.
+
+```ci si potrebbe chiedere allora sotto quali condizioni un problema NP-completo potrebbe essere risolto con un algoritmo polinomiale```
+
+
+un problema si dice fortemente NP-completo se esiste una restrizione che lo lascia comunque NP-completo
+- nonostante ci si restringa ad un caso favorevole (numeri piccoli), la complessità non diventa polinomiale
+
+THM: gli algoritmi pseudo-polinomiali non rientrano in questa categoria (infatti KP01 non è fortemente NP-completo) a meno che P = NP, ma allora
+sono tutti NP-Completi
