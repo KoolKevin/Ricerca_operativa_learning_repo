@@ -188,5 +188,4 @@ la complessità di un problema pseudopolinomiale potrebbe ridursi a polinomiale.
 un problema si dice fortemente NP-completo se esiste una restrizione che lo lascia comunque NP-completo
 - nonostante ci si restringa ad un caso favorevole (numeri piccoli), la complessità non diventa polinomiale
 
-THM: gli algoritmi pseudo-polinomiali non rientrano in questa categoria (infatti KP01 non è fortemente NP-completo) a meno che P = NP, ma allora
-sono tutti NP-Completi
+THM: gli algoritmi pseudo-polinomiali non rientrano in questa categoria (infatti KP01 non è fortemente NP-completo) a meno che P = NP, ma allora sarebbero tutti NP-Completi
