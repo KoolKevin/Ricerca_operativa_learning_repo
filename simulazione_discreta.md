@@ -100,8 +100,67 @@ ogni arrivo, come prima cosa, innesca un'altro arrivo
 ... nel sistema possono essere state generate più auto rispetto a quelle specificate in NTOT. in generale la condizione di terminazione non determina il numero di entità ...
 
 
- 
-
-
 
 **Nota**: alcuni eventi vengono schedulati con riferimento a entità specifiche. Ad esempio l'evento di fine degenze normale/grave viene schedulato per uno specifico paziente
+
+
+eventi endogeni sono quelli schedulati dalla simulazione
+
+
+
+
+
+
+operazioni simultanee possono essere accorpate
+
+
+tondino con S sta per start
+- inizia la gestione dell'evento appena pescato dalla coda del tempo con la relativa subroutine
+tondino con R sta per return
+- ritorna al simulatore e pesca il prossimo evento dalla coda dei tempi
+
+
+
+
+
+
+
+
+paradigma alternativo rispetto a quello della coda del tempo
+- che è agnostica rispetto all'entità che genera l'evento
+
+è il paradigma a interazione di processi in cui gli eventi sono associati ad un processo che ne definisce una sequenza propria
+
+
+
+
+
+## scendiamo al secondo livello
+Le variabili sono puntatori vengono riassegnati a diverse entità durante la simulazione in seguito al processamento di eventi
+- **NB**: bisogna memorizzare gli indirizzi delle vecchie entità che subiscono un assegnamento distruttivo, altrimenti vengono perse
+- questi indirizzi bisogna comunicarle al prossimo evento in quanto è l'unica entità che consente di accedere ad informazioni durante la simulazione (il sistema fa solo un ciclo: prelievo da coda del tempo - execute)
+
+
+
+
+
+### events and event notices
+
+
+
+ogni evento ha associata a se un'entità temporanea chiamata come se stesso chiamata **event notice**
+
+
+
+CR(E.SRV) := car ; aggiunge un attributo all'event notice
+car := CR(E.SRV) ; recupera l'attributo salvato
+
+devo creare l'event notice sia per aggiungerlo alla coda del tempo, che per salvarci dentro le informazioni (sotto forma di attributi) su cui dovrà operare 
+
+
+
+time.v = istante attuale
+
+
+
+perchè non aggiorniamo TTC? perchè non sappiamo se viene contata la media

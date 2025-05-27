@@ -8,3 +8,30 @@ basic concepts:
 
 
 ... brother, what is this?
+
+
+
+
+
+
+
+**formule varie per single server model**:
+
+- lambda = mean arrival rate of customers
+- mu     = mean service rate
+
+- ro     = lamda / mu               = the average utilization of the system
+- L      = lambda / (mu - lambda)   = the average number of customers in the service system
+- L_q    = ro*L                     = the average number of customers waiting in line
+- W      = 1 / (mu - L)             = the average time spent waiting in the system (including service)
+
+
+
+
+
+**Multi server waiting line model**
+...
+
+
+
+
