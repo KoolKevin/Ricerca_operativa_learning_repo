@@ -44,7 +44,7 @@ Se ci inventiamo anche una nuova funzione obiettivo: max pi'*b (scambiamo i term
 - righe e colonne scambiate nella matrice dei vincoli
 - un po' di altra roba
 
-**conclusione**: è dimostrabile che la base B da cui siamo partite corrisponde ad una BFS ottimale <->  pi' = c'_b*B^-1 è una soluzione ottima al problema duale
+**conclusione**: è dimostrabile che la base B da cui siamo partiti corrisponde ad una BFS ottimale <->  pi' = c'_b*B^-1 è una soluzione ottima al problema duale
 
 
 ...
@@ -137,7 +137,7 @@ Si tratta di un criterio di separazione tra un insieme di soluzioni ammissibili 
 - O il sistema ha una soluzione (cioè esiste un 𝑥 ≥ 0 che soddisfa 𝐴𝑥=𝑏),
 - Oppure esiste un vettore 𝑦, soluzione del problema duale, che dimostra l'impossibilità della soluzione
     - intuitivamente, le soluzioni del problema duale sono illimitate dato che il primale risulta impossibile
-    - se il duale si stacca da zero allora deve per forza deve andare a +inf (altri valori finiti dovrebbero essere uguali nel primale)
+    - se il duale si stacca da zero allora deve per forza andare a +inf (altri valori finiti dovrebbero essere uguali nel primale)
 
 
 
