@@ -237,7 +237,8 @@ Con analisi di sensitività si intende: una metodologia con cui valutare il risu
 Concetto di **intervallo di confidenza** di un dato in input (A, b, c):
 - se il dato varia all'interno del suo intervallo **la base rimane ottima**
 - **NB**: la base non cambia, **ma la BFS e il suo valore si**. Questo però non è un problema in quanto entrambi sono facilmente ricalcolabili conoscendo la base ottima (x = B^-1*b, e z = c*x)
-
+    - **ricorda**: l'inversa della base ottima la trovo nel **tableau finale** nelle colonne in corrispondenza della **base iniziale** 
+    
 Andiamo a vedere cosa succede se cambio una valore di _b_ o un costo _c_.
 - ho due equazioni nel tableau: 
     - se cambio b si modifica la soluzione x0, **ma il criterio di ottimalità rimane soddisfatto!**
