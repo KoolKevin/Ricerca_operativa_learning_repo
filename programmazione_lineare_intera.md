@@ -94,10 +94,19 @@ ricorda che il valore della soluzione del problema rilassato i (Li) è per forza
 guarda le slide che fai prima
 
 
+
+
+
+
+
+
+
+
+
+
 Two main issues for designing a branch-and-bound algorithm:
 - explorations strategy (which node has to be explored next) 
 - how to compute (tight) bounds (vedi tra un po') 
-
 
 ## Strategie di esplorazione in branch & bound
 Two main issues for designing a branch-and-bound algorithm:
@@ -127,7 +136,7 @@ interessante la difficoltà implementativa dell'algoritmo, che durante il backtr
 
 
 **dfs revisited**
-variante della DFS sopra in cui si combina un po' di Lowest bound first.
+variante della DFS sopra in cui si combina con un po' di Lowest bound first.
 - ad ogni passo di esplorazione non generiamo un solo figli ma tutti, e si continua con il figlio con il lowest bound
 - durante il backtracking, l'esplorazione continua facendo un solo passo indietro alla volta
     - scelgo tra i nodi fratelli rimanenti qullo con il lowest bound
@@ -139,14 +148,6 @@ si genera tutto di tutti
 usata raramente, ma occasionalmente utile se si ha bisogno di conoscere tutte le soluzioni ottime e magari anche alcune non ottime leggermente peggiori (magari costano molto meno considerando altre condizioni)
 
 
-
-
-**Come faccio a calcolare un bound migliore di quello di Dantzig?**
-ovvero più stretto
-
-consideriamo due casi, 
-- uno in cui c'è l'elemento critico 
-- ed uno in cui c'è (e quindi in cui andrà tolto qulcosa)
 
 
 
@@ -201,3 +202,15 @@ How many time (steps, iterations ...) requires the branch-and-bound algorithm fo
     - the algorithm will take a time proportional to n.
 - If we are unlucky, the bounds will kill no node: 
     - time proportional to 2^n .
+
+
+
+
+**Come faccio a calcolare un bound migliore di quello di Dantzig?**
+ovvero più stretto
+
+consideriamo due casi, 
+- uno in cui c'è l'elemento critico 
+- ed uno in cui c'è (e quindi in cui andrà tolto qulcosa)
+
+...
