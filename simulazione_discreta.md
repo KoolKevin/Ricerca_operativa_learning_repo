@@ -39,15 +39,16 @@ Il metodo della trasformazione inversa è estremamente utile perché permette di
 
 Una distribuzione di Poisson con parametro lambda ci dice la probabilità che ci siano k arrivals in un'unità di tempo
 - il valore atteso è di lambda arrivals
+    - in media abbiamo lambda arrivals per unità di tempo
 - e quindi che il tempo tra arrival medio sia 1/lambda
 
 
 
 
 ## Simulazione numerica a eventi discreti
-sono sistemi complessim in cui non è possibile
+sono sistemi complessi in cui non è possibile
 - scrivere un modello matematico in formula chiusa
-- utilizzare algoritmi come il simplesso e branch & bound
+- o utilizzare algoritmi come il simplesso e branch & bound
 
 ```perchè?```
 
@@ -74,7 +75,7 @@ nelle simulazioni abbiamo un solo **evento esterno** (avvio la simulazione) tutt
 - siccome gli eventi sono definiti da un PRNG la simulazione sa già quando il prossimo evento arriverà
 - di conseguenza, dopo aver finito di gestire l'evento, può modificare direttamente le lancette dell'orologio senza aspettare 
 
-La simulazione ha una coda del tempo in cui vengono inseriti gli eventi con il loro timestamp nel posto giusto. La simulazione si sposta nel tempo facendo dequeue di un evento alla volta
+La simulazione ha una **coda del tempo** in cui vengono inseriti gli eventi con il loro timestamp nel posto giusto. La simulazione si sposta nel tempo facendo dequeue di un evento alla volta
 
 
 
@@ -84,13 +85,8 @@ determina la sequenza di eventi che vanno ad innescarsi
 ogni blocco è un evento
 - con una sequenza di istruzioni di gestione dell'evento associata
 
-
-
 **molto comune**
 ogni arrivo, come prima cosa, innesca un'altro arrivo
-
-
-
 
 **Nota**: eventi con ritardo zero possono spesso essere accorpati/eliminati in quanto il loro arrivo corrisponde all'inizio/fine di un'altro evento
 - gli eventi modificano lo stato del sistema... questi spesso non lo fanno
@@ -104,12 +100,7 @@ ogni arrivo, come prima cosa, innesca un'altro arrivo
 **Nota**: alcuni eventi vengono schedulati con riferimento a entità specifiche. Ad esempio l'evento di fine degenze normale/grave viene schedulato per uno specifico paziente
 
 
-eventi endogeni sono quelli schedulati dalla simulazione
-
-
-
-
-
+eventi endogeni sono quelli schedulati dalla simulazione, contrapposti agli eventi esogeni che sono aggiunti dall'utente (e.g. start della simulazione)
 
 operazioni simultanee possono essere accorpate
 
@@ -121,15 +112,15 @@ tondino con R sta per return
 
 
 
-
-
-
-
-
 paradigma alternativo rispetto a quello della coda del tempo
 - che è agnostica rispetto all'entità che genera l'evento
 
 è il paradigma a interazione di processi in cui gli eventi sono associati ad un processo che ne definisce una sequenza propria
+
+
+
+
+
 
 
 
@@ -143,24 +134,116 @@ Le variabili sono puntatori vengono riassegnati a diverse entità durante la sim
 
 
 
+### Simulation statements | temporary entities
+- **Creazione/distruzione di entità temporanee (dinamiche)**
+    - temporary entities are **created** when they enter the system, **destroyed** when they leave it
+    - *CREATE [A, AN, THE] entitiy [CALLED p]* 
+        1. reserves a new block of memory for a new entity of class en;
+        2. defines a **local variable** p containing the corresponding **pointer**;
+            - if “CALLED p” is missing, the variable has name entity (preferred for single entities).
+        - Example:
+            - CREATE A CAR CALLED A1
+            - CREATE A CAR (equivalent to CREATE A CAR CALLED CAR)
+    - *DESTROY THE entity [CALLED p]* 
+        - releases the reserved block of memory pointed by p (by entity, if “CALLED p” omitted)
+- **lettura/scrittura di attributi**
+    - attribute(p)
+    - aggiunge/recupera l'attributo chiamato *attribute* dal puntatore p
+    - Example: 
+        - CREATE A CAR
+        - TYPE(CAR) = X
+            - CAR ha un attributo di tipo TYPE con valore X
 
-### events and event notices
+### Simulation statements | permanent entities
+- **System**
+    - The System can have **permanent attributes**
+    - permanent attributes are **global variables**.
+        - Example: NMAX, NLG, NLN.
+    - The System can **own sets with no index**
+        - Example: QUEUE.
+    - The system is automatically created, and is never destroyed.
+
+- **Permanent entities**
+    - Permanent entities can have **permanent attributes** (global variables)
+        - Form like arrays (index = specific permanent entity).
+        - Example: STATUS(J) = status (idle, busy) of **disc J**.
+    - Permanent entities are created by a single statement:
+        - *CREATE EVERY entity*;
+    - must be preceded by the definition of **N.entity** (= **number of entities of class entity**).
+        - Example: 
+        - *READ N.DISC*
+        - *CREATE EVERY DISC*
+
+
+### Simulation statements | sets
+- Sets have **members and owners**
+    - members are usually temporary entities
+    - owners are usually permanent entities
+- sets with no index are owned by the system
+    - hai già visto la QUEUE sopra
+- sets with index are owned by permanent entities.
+    - questi sono come degli attributi permanenti di entità permanenti
+    - l'indice serve solo a distinguere a quale entità permanente appartiene il set a cui ci si vuole riferire
+    - example: (code dei vari dischi DISC_QUEUE(i) = coda dell'i-esimo disco)
+- Sorting policies:
+    - FIFO;
+    - LIFO;
+    - Ranked
+        - precedence given by the increasing or decreasing value of an **attribute of the member entities**.
+- *FILE THE p IN THE s*
+    - inserts the entity pointed by p in set s
+- *REMOVE THE FIRST q FROM THE s*
+    - removes the first entity from set s
+    - stores its pointer in a local variable named q
+- *REMOVE THE p FROM THE s*
+    - removes the entity pointed by p from set s
+- *IF THE s IS EMPTY I / IF THE s IS NOT EMPTY I*
+    - executes I if s is/is not empty.
 
 
 
-ogni evento ha associata a se un'entità temporanea chiamata come se stesso chiamata **event notice**
+
+### Simulation statements | events and event notices
+- Exogenous events are scheduled through input data (no need to reserve memory)
+    - lasciamoli stare
+
+- each scheduled Endogenous event needs a block of memory (time , entity pointer(s), ...);
+- **Event Notice**: each event has an associated special **temporary entity having its name**;
+- event notices must be created before scheduling the event, and destroyed after the event is executed
+    - when an event is executed, the system stores the pointer to the event notice in a local variable having the event name.
+- **event notices can have attributes, typically used to store pointers to the entities that the event is interested in**
+    - vedrai tra poco che **sono gli event notices ad essere schedulati**
+    - modificando gli attributi di un event notice si implementano, ad esempio, gli eventi di inizio servizio di macchine diverse (attributo car diverso dell'event notice)
+    - devo creare l'event notice sia per aggiungerlo alla coda del tempo come evento da eseguire, sia per salvarci dentro le informazioni (sotto forma di attributi) su cui dovrà operare l'evento
+
+
+CREATE AN ev [CALLED p] 
+- reserves a new block of consecutive words for a **new event notice** of class ev;
+    - uguale alla creazione di entità temporanee in quanto gli event notice sono una loro specializzazione
+- defines a local variable p containing the corresponding pointer; 
+    - if “CALLED p” is missing, the variable has name ev.
+    
+SCHEDULE THIS ev [CALLED p] AT t 
+- schedules the event of pointer p (or ev) at t.
+- Note: t = absolute time. Implemented as, e.g., SCHEDULE THIS E.SRV AT TIME.V + T
+    - TIME.V = istante attuale
+
+CANCEL THE ev [CALLED p]
+- cancels the event of class ev having pointer p (or ev), **without** destroying the event notice.
+
+
+### How do events exchange information?
+There are only three possibilities:
+1. Permanent attributes 
+    - Example: TTC is reset to 0 in START, updated in E.SRV, and used in END;
+2. Attributes of event notices
+    - Example: CR(E.SRV) is defined in ARRIVAL and used in E.SRV;
+ 3. Attributes of temporary entities inserted and extracted from sets
+    - Example: CAR is inserted in QUEUE in ARRIVAL, and removed from it in E.SRV, where TIC(CAR) is used"
 
 
 
-CR(E.SRV) := car ; aggiunge un attributo all'event notice
-car := CR(E.SRV) ; recupera l'attributo salvato
 
-devo creare l'event notice sia per aggiungerlo alla coda del tempo, che per salvarci dentro le informazioni (sotto forma di attributi) su cui dovrà operare 
-
-
-
-time.v = istante attuale
-
-
-
-perchè non aggiorniamo TTC? perchè non sappiamo se viene contata la media
+### Grafica
+- esagono rappresenta il nome di una funzione
+- il mezzo esagono rappresenta una chiamata di funzione
