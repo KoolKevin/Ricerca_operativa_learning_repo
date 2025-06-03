@@ -209,10 +209,12 @@ Le variabili sono puntatori vengono riassegnati a diverse entità durante la sim
 
 - each scheduled Endogenous event needs a block of memory (time , entity pointer(s), ...);
 - **Event Notice**: each event has an associated special **temporary entity having its name**;
+    - gli eventi notice in pratica definiscono i dati variabili di una specifica istanza di un evento (car, tempo di schedulazione)
+    - gli eventi vengono schedulati
+    - un evento schedulato contiene un event-notice (con lo stesso nome) in cui salvo i dati che mi servono per gestire una specifica istanza di evento 
 - event notices must be created before scheduling the event, and destroyed after the event is executed
     - when an event is executed, the system stores the pointer to the event notice in a local variable having the event name.
 - **event notices can have attributes, typically used to store pointers to the entities that the event is interested in**
-    - vedrai tra poco che **sono gli event notices ad essere schedulati**
     - modificando gli attributi di un event notice si implementano, ad esempio, gli eventi di inizio servizio di macchine diverse (attributo car diverso dell'event notice)
     - devo creare l'event notice sia per aggiungerlo alla coda del tempo come evento da eseguire, sia per salvarci dentro le informazioni (sotto forma di attributi) su cui dovrà operare l'evento
 
@@ -244,6 +246,36 @@ There are only three possibilities:
 
 
 
-### Grafica
+**Grafica**
 - esagono rappresenta il nome di una funzione
 - il mezzo esagono rappresenta una chiamata di funzione
+- parallelogramma per stampe
+
+
+
+
+### Esempio finale ospedale
+distruggo l'event notice direttamente quando non c'è una coda e quindi non c'è nessun altro che può riutilizzare l'event notice
+
+
+
+
+
+
+### Esercizio esame
+lunedì 9, facciamo solo esercitazione
+
+- in una prima fase scriviamo:
+    - dati
+    - entità
+    - insiemi 
+        - code con la loro logica di ordinamento
+    
+- poi scriviamo un minimo di attributi
+
+- e poi diagramma degli inneschi
+
+
+
+quando ho un test, tutte le volte che modifico la variabile del test devo ricontrollare quest'ultimo
+- vedi end nell'esempio della stazione di servizio
